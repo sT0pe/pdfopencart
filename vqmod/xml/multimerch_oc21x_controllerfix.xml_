@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<!DOCTYPE modification [
+]>
+<modification>
+	<!-- opencart 2.0.x controller/model fix -->
+	<file name="admin/controller/multimerch/seller.php">
+		<operation error="skip">
+			<search position="replace"><![CDATA[customer_customer]]></search>
+			<add><![CDATA[sale_customer]]></add>
+		</operation>
+	</file>
+
+	<file name="admin/view/template/multiseller/seller-form.tpl">
+		<operation error="skip">
+			<search position="replace"><![CDATA[customer/customer]]></search>
+			<add><![CDATA[sale/customer]]></add>
+		</operation>
+	</file>
+</modification>

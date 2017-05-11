@@ -1,0 +1,656 @@
+.table-responsive {
+    overflow-x: initial;
+}
+
+.control-inline input, .control-inline select, .input-auto {
+    width: auto;
+    display: inline;
+}
+
+.control-inline .col-sm-2 {
+    height:35px;
+    line-height: 35px;
+}
+
+.control-inline .col-sm-3 {
+    text-align: center;
+    margin:5px 0;
+}
+
+.ms-settings .content form table tr h2 {
+	border-bottom: none;
+	text-transform: none;
+	margin: 25px 0 0;
+}
+
+.ms-settings .content form table tr:first-child h2 {
+	margin: 0;
+}
+
+td h3 {
+	color: #FF802B;
+	padding: 0;
+	margin: 0;
+}
+
+.ffSample {
+	display: none;
+}
+
+table.list tbody td,
+table.list thead td {
+	padding: 7px;
+}
+
+table.list td.checkbox {
+	width: 10px;
+}
+
+table.list td.comment {
+	width: 650px;
+}
+
+.ms-button {
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+	margin: 0 1px;
+	font-size: 20px;
+}
+
+.ms-button-small {
+	width: 16px;
+	height: 16px;
+}
+
+.ms-button-delete {
+	background-image: url(../../image/multiseller/ms-cross.png);
+}
+
+.ms-button-edit {
+	background-image: url(../../image/multiseller/ms-pencil.png);
+}
+
+.ms-button-paypal-mass-seller {
+	background-image: url(../../image/multiseller/ms-paypal-mass-seller.png);
+}
+
+.ms-button-paypal-mass-seller-all {
+	background-image: url(../../image/multiseller/ms-paypal-mass-seller-all.png);
+}
+
+.ms-button-paypal-mass-payment {
+	background-image: url(../../image/multiseller/ms-paypal-mass-payment.png);
+}
+
+.ms-button-paypal-mass-payment-all {
+	background-image: url(../../image/multiseller/ms-paypal-mass-payment-all.png);
+}
+
+.ms-button-profile {
+	background-image: url(../../image/multiseller/ms-profile.png);
+}
+
+.ms-button-profile-plus {
+	background-image: url(../../image/multiseller/ms-profile-plus.png);
+}
+
+.ms-button-dollar-plus {
+	background-image: url(../../image/multiseller/ms-dollar-plus.png);
+}
+
+
+.ms-button-paypal-bw {
+	background-image: url(../../image/multiseller/ms-paypal-bw.png);
+	cursor: default;
+}
+
+.ms-button-mark {
+	background-image: url(../../image/multiseller/ms-tick.png);
+}
+
+.ms-loading {
+	background: url(../../image/loading.gif) no-repeat center;
+}
+
+.ms-button-apply {
+	background-image: url(../../image/success.png);
+	display: inline-block;
+	cursor: pointer;
+	vertical-align: middle;
+}
+
+.ms-payout table.list tbody tr {
+	height: 50px;
+}
+
+.fee-rate-1 {
+	color: #4E8B00;
+}
+
+.fee-rate-2 {
+	color: #1C237A;
+}
+
+.fee-rate-3 {
+	color: #C84848;
+}
+
+h1 img {
+	width: 22px;
+}
+
+/* datatables */
+
+.dataTables_wrapper .dataTables_processing {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    margin:0;
+    background: rgba(255,255,255,.90);
+    border: 1px solid #efefef;
+}
+
+.dataTables_wrapper .dataTables_processing i {
+    margin-top: 15px;
+}
+
+
+.dataTables_length, .dataTables_filter {
+	display: inline-block;
+	margin-bottom: 5px;
+}
+
+.dataTables_length {
+	float: left;
+}
+
+.dataTables_filter {
+	float: right;
+}
+
+
+.dataTables_wrapper table.dataTable {
+	margin-bottom: 10px;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+	float: left;
+}
+
+.dataTables_wrapper .dataTables_info {
+	float: right;
+}
+
+/* table cell sizes*/
+table .tiny {
+	width: 50px;
+}
+
+table .small {
+	width: 75px;
+}
+
+table .medium {
+	width: 125px;
+}
+
+table .large {
+	width: 200px;
+}
+
+table .filter input[type="text"] {
+	width: 100%;
+	box-sizing: border-box;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing: border-box;
+}
+
+.dataTables_filter {
+	display: none;
+}
+
+table.list thead td.right {
+	text-align: center;
+}
+
+.dataTables_wrapper .paging_full_numbers a.paginate_button,
+.dataTables_wrapper .paging_full_numbers a.paginate_button:hover,
+.dataTables_wrapper .paging_full_numbers a.paginate_active {
+	border: 1px solid #DDDDDD;
+	padding: 4px 10px;
+	font-size: 12px;
+	text-decoration: none;
+	color: #A3A3A3 !important;
+	background-color: transparent;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+	margin: 0 2px;	
+}
+
+.dataTables_wrapper .paging_full_numbers a.paginate_active {
+	border: 1px solid #269BC6;
+	color: #269BC6 !important;
+}
+
+.dataTables_wrapper .paging_full_numbers .paginate_button_disabled {
+	display: none;
+}
+
+.v-top
+{
+    vertical-align: top;
+}
+
+.msBlack .ui-widget-header {
+    background: url("view/image/ui-bg_gloss-wave_35_000000_500x100.png") repeat-x scroll 50% 50% #F6A828;
+    border: 1px solid #000000;
+}
+
+/* ms settings page */
+
+.ms-settings .mm_container {
+	background: #F6F6F6;
+	max-width:1205px;
+	margin: 0 0 0 20px;
+	display: flex;
+
+}
+
+.ms-settings .content {
+	display: inline-block;
+	background: #F6F6F6;
+	order: 2;
+	width: 100%
+}
+
+.ms-settings .sidebar {
+	background-color: #EBEBEB;
+	width: 187px;
+	order: 1;
+	font-size: 15px;
+	font-family: "Open Sans";
+}
+.ms-settings .sidebar ul {
+	margin: 0;
+	padding: 0;
+}
+
+.ms-settings .sidebar li {
+	width: 100%;
+	list-style-type: none;
+}
+
+.ms-settings .sidebar li a {
+	display: block;
+	width: 100%;
+	padding: 10px 17px;
+	color: #2E2E2E;
+}
+
+.ms-settings .sidebar li a:hover {
+	background: #F0F0F0;
+	color: #2E2E2E;
+}
+
+.ms-settings .sidebar .active {
+	background: #F6F6F6;
+	border-left: 3px solid #2E94AC;
+}
+
+.ms-settings .sidebar .active a {
+	padding-left: 14px;
+}
+
+.ms-settings .mm_container .control-label {
+	font-weight: normal;
+	font-size: 13px;
+	color:#2E2E2E;
+	position: relative;
+	padding-left: 20px;
+}
+
+.ms-settings .form-group {
+	clear: both;
+	margin-bottom: 0;
+	padding: 14px;
+	border-top: 1px solid #E6E6E6;
+	width: 100%;
+	display: block;
+}
+
+.ms-settings .form-control-mini:first-child {
+	margin-right:0;
+}
+
+.ms-settings .form-group:first-child {
+	border-top:none;
+}
+
+.ms-settings .form-group:before,
+.ms-settings .form-group:after,
+.ms-settings .radiobuttons:before,
+.ms-settings .radiobuttons:after {
+	clear: both;
+	content: " ";
+	display: table;
+}
+
+.ms-settings .comment {
+	font-style: italic;
+	font-size: 11px;
+	color: #b2b2b2;
+	margin-top: 10px;
+}
+
+.ms-settings .form-group label {
+	padding-top: 7px;
+}
+
+.ms-settings .form-group .radio-inline {
+	padding-top: 0;
+}
+
+.ms-settings .form-group .radio-inline input[type="radio"] {
+	margin-right: 4px;
+}
+
+.ms-settings .tab-pane {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width: 100%;
+}
+
+.ms-settings .control-label {
+	text-align: left;
+}
+
+.ms-settings .form-control {
+	font-size: 13px;
+	display: block;
+	width: 100%;
+	height: 34px;
+	padding: 6px 12px;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #D0D0D0;
+	border-radius: 3px;
+	box-shadow: none;
+	max-width: 480px;
+	-webkit-appearance:none;
+}
+
+.ms-settings .tab-pane h4 {
+	padding-left: 34px;
+	margin-top: 20px;
+	font-weight:600;
+}
+.radio-inline {
+	display: inline-block;
+	cursor: pointer;
+	position: relative;
+	padding-left: 25px;
+	margin-right: 15px;
+	font-size: 13px;
+}
+
+input.mm_radio[type=radio] {
+	display: none;
+}
+
+.radio-inline:before {
+	content: "";
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	margin-right: 10px;
+	position: absolute;
+	left: 0;
+	/*background: url('../../image/elements.png') top left;*/
+}
+
+input.mm_radio[type=radio]:checked + .radio-inline:before {
+	background: url('../../image/elements.png') -18px 0;
+	color: #f3f3f3;
+	font-size: 30px;
+	text-align: center;
+	line-height: 18px;
+}
+
+.mm_radio[type=checkbox] {
+	display: none;
+}
+
+input.mm_radio[type=checkbox] + .radio-inline {
+	background: url('../../image/elements.png') 17px 0;
+}
+
+input.mm_radio[type=checkbox]:checked + .radio-inline {
+	background: url('../../image/elements.png') 17px -17px;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+	font-size: 15px;
+	color: #f3f3f3;
+	text-align: center;
+	line-height: 15px;
+}
+
+.form-control-mini {
+	font-size: 13px;
+	height: 34px;
+	padding: 6px 12px;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #D0D0D0;
+	border-radius: 3px;
+	box-shadow: none;
+	outline: none;
+	width: 80px;
+	-webkit-appearance:none;
+	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+	margin-right: 10px;
+}
+
+.mm_container .form-control:focus, .mm_container .form-control-mini:focus {
+	box-shadow:none;
+	border-color: #2E94AC;
+}
+
+.control-label {
+	max-width: 200px;
+}
+
+.arrow {
+	width:13px;
+	height: 8px;
+	display: block;
+	position: absolute;
+	top:13px;
+	right: 8px;
+	background: url('../../image/elements.png') right no-repeat;
+}
+
+.selectcontainer {
+	position: relative;
+	max-width: 480px;
+}
+
+.radiobuttons {
+	display: block;
+	clear: both;
+}
+
+.control-inline {
+	font-size: 13px;
+}
+
+.control-inline span {
+	margin-top: 1px;
+	margin-right: 7px;
+}
+
+#tab-shipping .btn-default {
+	color: #777;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	background-color: #e7e7e7;
+	background-image: linear-gradient(to bottom, #eeeeee, #dddddd);
+	background-repeat: repeat-x;
+	border-color: #dddddd #dddddd #b3b3b3 #b7b7b7;
+}
+
+table#list-shipping-methods tbody td:last-child a {
+	margin-left: 4px;
+}
+
+.ms_alert {
+	margin: 0 60px 17px 20px;
+}
+
+.readonly-field {
+	padding-top: 9px;
+}
+
+/* Seller attributes */
+.ms-attributes-topbar {
+	border-bottom: 0;
+	margin-bottom: 0;
+}
+
+.ms-attributes-topbar a {
+	border: 1px solid #ddd !important;
+	border-radius: 2px !important;
+}
+
+/* Seller categories */
+.ms-category-form fieldset {
+	border: 1px solid #E5E5E5;
+	border-radius: 5px;
+	padding: 15px;
+	margin-bottom: 20px;
+	position: relative;
+}
+
+.ms-category-form fieldset legend {
+	border-bottom: 0;
+	padding: 0 10px;
+	width: auto;
+}
+
+.ms-category-form .lang-img-icon-input {
+	position: absolute;
+	z-index: 9999;
+	right:20px;
+}
+
+.ms-category-form .lang-chooser img {
+	cursor: pointer;
+	margin-left: 2px;
+	opacity: 0.6;
+}
+
+.ms-category-form .lang-chooser img.active {
+	opacity: 1;
+	cursor: default;
+}
+
+/* Messaging */
+.ms-account-conversation {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 15px;
+}
+
+.ms-messages .ms-message {
+	margin-bottom: 10px;
+}
+
+.ms-messages .ms-message .title {
+	font-weight: bold;
+}
+
+.ms-messages .ms-message .title .date {
+	font-weight: normal;
+	color: #919a9b;
+	margin-left: 10px;
+}
+
+.ms-messages .ms-message .body {
+	background-color: #e4f5fa;
+	padding: 8px 14px 8px 14px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	position: relative;
+	margin-top: 5px;
+}
+
+.ms-messages .ms-message.admin .body {
+	background-color: #f5e79e;
+}
+
+.ms-messages .ms-message.seller .body {
+	background-color: #efefef;
+}
+
+.ms-messages .ms-message .body::before {
+	content:"\A";
+	border-style: solid;
+	border-width: 5px 8px 5px 0;
+	border-color: transparent #e4f5fa transparent transparent;
+	position: absolute;
+	left: 20px;
+	top: -8px;
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+.ms-messages .ms-message.admin .body::before {
+	border-color: transparent #f5e79e transparent transparent;
+}
+
+.ms-messages .ms-message.seller .body::before {
+	border-color: transparent #efefef transparent transparent;
+}
+
+.ms-messages .ms-message .attachments {
+	padding: 10px;
+}
+
+.ms-messages .ms-message .attachments a {
+	cursor: pointer;
+}
+
+.ms-message-form {
+	border-top: 1px solid #e8e8e8;
+}
+
+.ms-message-form form {
+	margin-top: 15px;
+}
+
+.ms-message-form .list {
+	margin-top: 5px;
+}
+
+.ms-message-form .ms-remove {
+	margin-left: 3px;
+	color: red;
+}
+
+/* Sale > Order > Info */
+.ms-suborder-history .suborder-info {
+	font-size: 14px;
+	margin-bottom: 25px;
+}
+
+.ms-suborder-history .suborder-info ul {
+	list-style: none;
+	padding-left: 0;
+}

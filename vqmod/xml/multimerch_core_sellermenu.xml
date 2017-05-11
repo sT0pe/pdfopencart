@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<!DOCTYPE modification [
+]>
+<modification>
+	<id>MultiMerch Core Seller Menu</id>
+	<author>http://multimerch.com/</author>
+
+	<!-- simple seller registration - login -->
+	<file name="catalog/view/theme/*/template/account/login.tpl">
+		<operation error="log">
+			<search position="before"><![CDATA[
+				<!-- mm register form end -->
+			]]></search>
+			<add><![CDATA[
+				<?php $msLng = MsLoader::getInstance()->getRegistry()->get('language')->load('multiseller/multiseller'); ?>
+				<div class="well">
+					<h2><?php echo $msLng['ms_account_register_new']; ?></h2>
+					<p><strong><?php echo $msLng['ms_account_register_seller']; ?></strong></p>
+					<p><?php echo $msLng['ms_account_register_seller_note']; ?></p>
+					<a href="<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('account/register-seller', '', 'SSL'); ?>" class="btn btn-primary"><?php echo $button_continue; ?></a>
+				</div>
+			]]></add>
+		</operation>
+	</file>
+
+	<!-- seller account menu in header -->
+    <file name="catalog/view/theme/*/template/common/header.tpl">
+		<operation error="log">
+			<search position="after"><![CDATA[
+                <li><a href="<?php echo $download; ?>"><?php echo $text_download; ?></a></li>
+			]]></search>
+			<add><![CDATA[
+                <li role="separator" class="divider"></li>
+                <li class='menu-header'><?php echo $ms_seller ;?></li>
+				<?php if ($ms_seller_created && $this->MsLoader->MsSeller->getStatus($this->customer->getId()) == MsSeller::STATUS_ACTIVE) { ?>
+					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-dashboard', '', 'SSL'); ?>"><?php echo $ms_account_dashboard; ?></a></li>
+					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-order', '', 'SSL'); ?>"><?php echo $ms_account_orders; ?></a></li>
+					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-product', '', 'SSL'); ?>"><?php echo $ms_account_products; ?></a></li>
+					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-transaction', '', 'SSL'); ?>"><?php echo $ms_account_transactions; ?></a></li>
+					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-payment', '', 'SSL'); ?>"><?php echo $ms_account_payments; ?></a></li>
+					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-payment-request', '', 'SSL'); ?>"><?php echo $ms_account_payment_requests; ?></a></li>
+					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-profile', '', 'SSL'); ?>"><?php echo $ms_account_sellerinfo; ?></a></li>
+					<!--<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-return', '', 'SSL'); ?>"><?php echo $ms_account_returns; ?></a></li>-->
+					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-setting', '', 'SSL'); ?>"><?php echo $ms_account_settings; ?></a></li>
+				<?php } else if ($ms_seller_created && $this->MsLoader->MsSeller->getStatus($this->customer->getId()) == MsSeller::STATUS_UNPAID) { ?>
+					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-payment-request', '', 'SSL'); ?>"><?php echo $ms_account_payment_requests; ?></a></li>
+					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-profile', '', 'SSL'); ?>"><?php echo $ms_account_sellerinfo; ?></a></li>
+					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-setting', '', 'SSL'); ?>"><?php echo $ms_account_settings; ?></a></li>
+				<?php } else { ?>
+					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-profile', '', 'SSL'); ?>"><?php echo $ms_account_sellerinfo_new_short; ?></a></li>
+				<?php } ?>
+                <li role="separator" class="divider"></li>
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="after"><![CDATA[
+                <li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></li>
+			]]></search>
+			<add><![CDATA[
+                <li role="separator" class="divider"></li>
+                <li class='menu-header'><?php echo $ms_account_orders_customer ;?></li>
+			]]></add>
+		</operation>
+	</file>
+</modification>

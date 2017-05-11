@@ -1,0 +1,110 @@
+<?xml version="1.0" ?>
+<!DOCTYPE modification [
+]>
+<modification>
+	<id>MultiMerch Core Transactions</id>
+	<author>http://multimerch.com/</author>
+	
+	<!-- transactions for order -->
+	<file name="catalog/model/checkout/order.php">
+		<operation>
+			<search position="before"><![CDATA[return $order_id;]]></search>
+			<add><![CDATA[
+		        $this->MsLoader->MsTransaction->createMsOrderDataEntries($order_id);
+			]]></add>
+		</operation>
+
+		<operation>
+			<search position="after"><![CDATA[
+				$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
+			]]></search>
+			<add><![CDATA[
+				$this->MsLoader->MsTransaction->createMsOrderBalanceEntries($order_id, $order_status_id);
+			]]></add>
+		</operation>
+	</file>
+
+	<!-- Fix admin order edit -->
+	<file name="catalog/controller/api/order.php">
+		<operation>
+			<search position="after"><![CDATA[
+				$this->model_checkout_order->editOrder($order_id, $order_data);
+			]]></search>
+			<add><![CDATA[
+				$this->MsLoader->MsOrderData->adminUpdateMsOrderDataEntries($order_id);
+			]]></add>
+		</operation>
+	</file>
+
+    <file name="admin/view/template/marketing/coupon_form.tpl">
+        <operation>
+            <search position="before"><![CDATA[
+				<div class="panel panel-default">
+			]]></search>
+            <add><![CDATA[
+            <div class="alert alert-warning" role="alert">
+		        <?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_fixed_coupon_warning'); ?>
+	        </div>
+            ]]></add>
+        </operation>
+    </file>
+
+    <file name="admin/view/template/sale/voucher_form.tpl">
+        <operation>
+            <search position="before"><![CDATA[
+				<div class="panel panel-default">
+			]]></search>
+            <add><![CDATA[
+            <div class="alert alert-warning" role="alert">
+		        <?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_voucher_warning'); ?>
+	        </div>
+            ]]></add>
+        </operation>
+    </file>
+
+    <file name="admin/view/template/sale/voucher_list.tpl">
+        <operation>
+            <search position="before"><![CDATA[
+				<div class="panel panel-default">
+			]]></search>
+            <add><![CDATA[
+            <div class="alert alert-warning" role="alert">
+		        <?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_voucher_warning'); ?>
+	        </div>
+            ]]></add>
+        </operation>
+    </file>
+
+    <file name="catalog/controller/extension/total/coupon.php">
+        <operation>
+            <search position="before"><![CDATA[
+				$this->response->addHeader
+			]]></search>
+            <add><![CDATA[
+            if(isset($coupon_info["type"]) AND $coupon_info["type"] == "F"){
+                unset($json['redirect']);
+                unset($this->session->data['success']);
+                unset($this->session->data['coupon']);
+                $this->load->language('multiseller/multiseller');
+                $json['error'] = $this->language->get('ms_error_fixed_coupon_warning');
+		    }
+            ]]></add>
+        </operation>
+    </file>
+
+    <file name="catalog/controller/extension/total/voucher.php">
+        <operation>
+            <search position="before"><![CDATA[
+				$this->response->addHeader
+			]]></search>
+            <add><![CDATA[
+                unset($json['redirect']);
+                unset($this->session->data['success']);
+                unset($this->session->data['voucher']);
+                $this->load->language('multiseller/multiseller');
+                $json['error'] = $this->language->get('ms_error_voucher_warning');
+            ]]></add>
+        </operation>
+    </file>
+
+</modification>

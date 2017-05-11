@@ -1,0 +1,334 @@
+<?xml version="1.0" ?>
+<!DOCTYPE modification [
+]>
+<modification>
+	<id>MultiMerch Core seller information in various places</id>
+	<author>http://multimerch.com/</author>
+
+	<!-- seller info in cart -->
+	<file name="catalog/controller/checkout/cart.php">
+		<operation error="log">
+			<search position="after"><![CDATA[
+				$data['products'][] = array(
+			]]></search>
+			<add><![CDATA[
+				'product_id' => $product['product_id'],
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/view/theme/*/template/checkout/cart.tpl">
+		<operation error="log">
+			<search position="after"><![CDATA[
+				<a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+			]]></search>
+			<add><![CDATA[
+				<?php
+					MsLoader::getInstance()->getRegistry()->get('load')->language('multiseller/multiseller');
+					$seller = MsLoader::getInstance()->MsSeller->getSeller(MsLoader::getInstance()->MsProduct->getSellerId($product['product_id']));
+					if ($seller) {
+						echo "<span class='ms-by-seller'>" . MsLoader::getInstance()->getRegistry()->get('language')->get('ms_by') . " <a href='". $this->url->link('seller/catalog-seller/profile', 'seller_id=' . $seller['seller_id']) ."'>{$seller['ms.nickname']}</a>";
+					}
+				?>
+			]]></add>
+		</operation>
+	</file>
+	
+	<!-- seller info on checkout confirmation -->
+	<file name="catalog/view/theme/*/template/checkout/confirm.tpl">
+		<operation error="log">
+			<search position="after"><![CDATA[
+				<a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+			]]></search>
+			<add><![CDATA[
+				<?php
+					MsLoader::getInstance()->getRegistry()->get('load')->language('multiseller/multiseller');
+					$seller = MsLoader::getInstance()->MsSeller->getSeller(MsLoader::getInstance()->MsProduct->getSellerId($product['product_id']));
+					// @todo shipping edition not installed
+					if ($seller/* && MsLoader::getInstance()->dist != "SE"*/) {
+						echo "<span class='ms-by-seller'>" . MsLoader::getInstance()->getRegistry()->get('language')->get('ms_by') . " <a href='". $this->url->link('seller/catalog-seller/profile', 'seller_id=' . $seller['seller_id']) ."'>{$seller['ms.nickname']}</a>";
+					}
+				?>
+			]]></add>
+		</operation>
+	</file>	
+	
+	<!--  seller info in minicart -->
+	<file name="catalog/controller/common/cart.php">
+		<operation error="log">
+			<search position="after"><![CDATA[
+			$data['products'][] = array(
+			]]></search>
+			<add><![CDATA[
+				'product_id' => $product['product_id'],
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/view/theme/*/template/common/cart.tpl">
+		<operation error="log">
+			<search position="after"><![CDATA[
+				<a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+			]]></search>
+			<add><![CDATA[
+			<?php
+				MsLoader::getInstance()->getRegistry()->get('load')->language('multiseller/multiseller');
+				$seller = MsLoader::getInstance()->MsSeller->getSeller(MsLoader::getInstance()->MsProduct->getSellerId($product['product_id']));
+				if ($seller) {
+					echo "<span class='ms-by-seller'>" . MsLoader::getInstance()->getRegistry()->get('language')->get('ms_by') . " <a href='". $this->url->link('seller/catalog-seller/profile', 'seller_id=' . $seller['seller_id']) ."'>{$seller['ms.nickname']}</a>";
+				}
+			?>
+			]]></add>
+		</operation>
+	</file>
+
+	<!-- seller info in confirmation email -->
+	<file name="catalog/model/checkout/order.php">
+		<operation error="log">
+			<search position="before"><![CDATA[
+				$data['products'][] = array(
+			]]></search>
+			<add><![CDATA[
+				MsLoader::getInstance()->getRegistry()->get('load')->language('multiseller/multiseller');
+				$seller = MsLoader::getInstance()->MsSeller->getSeller(MsLoader::getInstance()->MsProduct->getSellerId($product['product_id']));
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="after"><![CDATA[
+				$data['products'][] = array(
+			]]></search>
+			<add><![CDATA[
+				'product_id' => $product['product_id'],
+				'seller_text' => ($seller ? ("<br/ > " . MsLoader::getInstance()->getRegistry()->get('language')->get('ms_by') . " {$seller['ms.nickname']} <br />") : ''),
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="catalog/view/theme/*/template/mail/order.tpl">
+		<operation error="log">
+			<search position="after"><![CDATA[
+				<td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;"><?php echo $product['name']; ?>
+			]]></search>
+			<add><![CDATA[
+				<?php echo isset($product['seller_text']) ? $product['seller_text'] : ''; ?>
+			]]></add>
+		</operation>
+	</file>
+
+	<!-- seller info in account -->
+	<file name="catalog/controller/account/order.php">
+        <operation error="log">
+			<search position="after" offset="2"><![CDATA[
+				$order_id = 0;
+			]]></search>
+			<add><![CDATA[
+				MsLoader::getInstance()->getRegistry()->get('load')->model('localisation/order_status');
+				$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+			]]></add>
+		</operation>
+
+		<!-- add seller, status infos and products shipping costs -->
+		<operation error="log">
+			<search position="before"><![CDATA[
+				foreach ($products as $product) {
+			]]></search>
+			<add><![CDATA[
+				$data['mm_shipping_flag'] = 0;
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="before"><![CDATA[
+				$data['order_id']
+			]]></search>
+			<add><![CDATA[
+				$data['order_status_id'] = $order_info['order_status_id'];
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="after"><![CDATA[
+				foreach ($products as $product) {
+			]]></search>
+			<add><![CDATA[
+				$seller_id = MsLoader::getInstance()->MsProduct->getSellerId($product['product_id']);
+
+				$suborder_status_id = MsLoader::getInstance()->MsSuborder->getSuborderStatus(array(
+					'order_id' => $order_id,
+					'seller_id' => $seller_id
+				));
+
+				// Check if any of order products has MM shipping data
+				if(MsLoader::getInstance()->MsOrderData->getOrderProductShippable($product)) {
+					$data['mm_shipping_flag'] += 1;
+				}
+
+				// Get product shipping cost
+				$order_data = MsLoader::getInstance()->MsOrderData->getOrderData($product);
+				$shipping_cost_formatted = $this->currency->format(isset($order_data[0]['shipping_cost']) ? $order_data[0]['shipping_cost'] : 0, $order_info['currency_code'], $order_info['currency_value']);
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="after"><![CDATA[
+			$data['products'][] = array(
+			]]></search>
+			<add><![CDATA[
+				'product_id' => $product['product_id'],
+				'suborder_status_id' => $suborder_status_id,
+				'order_status_id' => $order_info['order_status_id'],
+				'suborder_status_text' => '<b>' . $this->MsLoader->MsHelper->getStatusName(array('order_status_id' => $suborder_status_id)) . '</b>',
+				'shipping_cost_formatted' => $shipping_cost_formatted,
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="replace"><![CDATA[
+				$this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
+			]]></search>
+			<add><![CDATA[
+				$this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0) + (isset($product['shipping_cost']) ? $product['shipping_cost'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+			]]></add>
+		</operation>
+
+        <operation error="log">
+			<search position="after"><![CDATA[
+			$data['histories'] = array();
+			]]></search>
+			<add><![CDATA[
+            $this->document->addScript('catalog/view/javascript/multimerch/account-message.js');
+		    $this->MsLoader->MsHelper->addStyle('multimerch_messaging');
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/view/theme/*/template/account/order_info.tpl">
+        <!-- seller owning the product -->
+		<operation error="log">
+			<search position="after"><![CDATA[
+				<td class="text-left"><?php echo $product['name']; ?>
+			]]></search>
+			<add><![CDATA[
+			<?php
+				MsLoader::getInstance()->getRegistry()->get('load')->language('multiseller/multiseller');
+				$seller = MsLoader::getInstance()->MsSeller->getSeller(MsLoader::getInstance()->MsProduct->getSellerId($product['product_id']));
+				if ($seller) {
+					echo "<span class='ms-by-seller'>" . MsLoader::getInstance()->getRegistry()->get('language')->get('ms_by') . " <a href='". $this->url->link('seller/catalog-seller/profile', 'seller_id=' . $seller['seller_id']) ."'>{$seller['ms.nickname']}</a>";
+				}
+			?>
+			]]></add>
+		</operation>
+
+        <!-- suborder / product status -->
+		<operation error="log">
+			<search position="after"><![CDATA[
+				<td class="text-left"><?php echo $product['model']; ?></td>
+			]]></search>
+			<add><![CDATA[
+				<td>
+				    <?php echo $product['suborder_status_text']; ?>
+				</td>
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="after"><![CDATA[
+				<td class="text-left"><?php echo $column_model; ?></td>
+			]]></search>
+			<add><![CDATA[
+				<td><b><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_status'); ?></b></td>
+			]]></add>
+		</operation>
+
+        <!-- seller histories -->
+        <operation error="log">
+			<search position="before"><![CDATA[
+				<div class="buttons
+			]]></search>
+			<add><![CDATA[
+			<div id="seller_history"></div>
+            <script>
+                $('#seller_history').load('index.php?route=multimerch/account_order/customerOrderConversation&order_id=<?php echo $order_id; ?>');
+            </script>
+			]]></add>
+		</operation>
+
+		<!-- order product shipping -->
+		<operation error="log">
+			<search position="after"><![CDATA[
+				<td class="text-right"><?php echo $column_price; ?></td>
+			]]></search>
+			<add><![CDATA[
+				<?php if($this->config->get('msconf_shipping_type') == 2 && $mm_shipping_flag) { ?>
+					<td class="text-right"><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('mm_account_order_shipping_cost'); ?></td>
+				<?php } ?>
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="after"><![CDATA[
+				<td class="text-right"><?php echo $product['price']; ?></td>
+			]]></search>
+			<add><![CDATA[
+				<?php if($this->config->get('msconf_shipping_type') == 2 && $mm_shipping_flag) { ?>
+					<td class="text-right"><?php echo $product['shipping_cost_formatted']; ?></td>
+				<?php } ?>
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="replace"><![CDATA[
+				<td colspan="3"></td>
+			]]></search>
+			<add><![CDATA[
+				<td colspan="<?php echo ($this->config->get('msconf_shipping_type') == 2 && $mm_shipping_flag) ? '5' : '4'; ?>"></td>
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="replace"><![CDATA[
+				<?php echo $date_added; ?>
+			]]></search>
+			<add><![CDATA[
+				<?php echo $date_added; ?><br/><b><?php echo $this->language->get('ms_status') . ': ' . $this->MsLoader->MsHelper->getStatusName(array('order_status_id' => $order_status_id)); ?></b>
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="before" index="1"><![CDATA[
+				<table class="table table-bordered table-hover"
+			]]></search>
+			<add><![CDATA[
+				<h3><?php echo $this->language->get('ms_order_details'); ?></h3>
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="before" index="2"><![CDATA[
+				<table class="table table-bordered table-hover"
+			]]></search>
+			<add><![CDATA[
+				<h3><?php echo $this->language->get('ms_account_orders_addresses'); ?></h3>
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="before" index="3"><![CDATA[
+				<table class="table table-bordered table-hover"
+			]]></search>
+			<add><![CDATA[
+				<h3><?php echo $this->language->get('ms_account_orders_products'); ?></h3>
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="replace"><![CDATA[
+				<?php echo $text_history; ?>
+			]]></search>
+			<add><![CDATA[
+				<?php echo $this->language->get('ms_account_orders_marketplace_history'); ?>
+			]]></add>
+		</operation>
+	</file>
+</modification>

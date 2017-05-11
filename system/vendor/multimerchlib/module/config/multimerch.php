@@ -1,0 +1,46 @@
+<?php
+
+return array(
+    'service_locator' => array(
+        'factories' => array(
+            'MailTransport' => '\MultiMerch\Mail\Transport\Factory',
+            'PhpRenderer' => '\MultiMerch\View\Renderer\Factory',
+            'Translator' => '\MultiMerch\Translator\Factory',
+        ),
+        'instances' => array(
+            'MailSellerAwaitingModeration' => '\MultiMerch\Mail\Message\Seller\AwaitingModeration',
+            'MailSellerAccountCreated' => '\MultiMerch\Mail\Message\Seller\AccountCreated',
+            'MailSellerAccountModified' => '\MultiMerch\Mail\Message\Seller\AccountModified',
+            'MailProductAwaitingModeration' => '\MultiMerch\Mail\Message\Product\AwaitingModeration',
+            'MailProductModified' => '\MultiMerch\Mail\Message\Product\Modified',
+            'MailProductPurchased' => '\MultiMerch\Mail\Message\Product\Purchased',
+			'MailProductReviewed' => '\MultiMerch\Mail\Message\Product\Reviewed',
+			'MailProductReturned' => '\MultiMerch\Mail\Message\Product\Returned',
+			'MailAttributeCreated' => '\MultiMerch\Mail\Message\Catalog\AttributeCreated',
+			'MailAttributeStatusChanged' => '\MultiMerch\Mail\Message\Catalog\AttributeStatusChanged',
+			'MailAttributeSellerChanged' => '\MultiMerch\Mail\Message\Catalog\AttributeSellerChanged',
+			'MailAttributeConvertedToGlobal' => '\MultiMerch\Mail\Message\Catalog\AttributeConvertedToGlobal',
+			'MailAttributeGroupCreated' => '\MultiMerch\Mail\Message\Catalog\AttributeGroupCreated',
+			'MailAttributeGroupStatusChanged' => '\MultiMerch\Mail\Message\Catalog\AttributeGroupStatusChanged',
+			'MailCategoryCreated' => '\MultiMerch\Mail\Message\Catalog\CategoryCreated',
+			'MailCategoryStatusChanged' => '\MultiMerch\Mail\Message\Catalog\CategoryStatusChanged',
+			'MailOptionCreated' => '\MultiMerch\Mail\Message\Catalog\OptionCreated',
+			'MailOptionStatusChanged' => '\MultiMerch\Mail\Message\Catalog\OptionStatusChanged',
+			'MailOptionSellerChanged' => '\MultiMerch\Mail\Message\Catalog\OptionSellerChanged',
+			'MailOptionConvertedToGlobal' => '\MultiMerch\Mail\Message\Catalog\OptionConvertedToGlobal',
+            'MailWithdrawRequestSubmitted' => '\MultiMerch\Mail\Message\Withdraw\RequestSubmitted',
+            'MailWithdrawRequestCompleted' => '\MultiMerch\Mail\Message\Withdraw\RequestCompleted',
+            'MailWithdrawRequestDeclined' => '\MultiMerch\Mail\Message\Withdraw\RequestDeclined',
+            'MailTransactionPerformed' => '\MultiMerch\Mail\Message\Transaction\Performed',
+            'MailOrderUpdated' => '\MultiMerch\Mail\Message\Orders\Updated',
+            'MailSellerRemindListing' => '\MultiMerch\Mail\Message\Seller\RemindListing',
+            'MailSellerPrivateMessage' => '\MultiMerch\Mail\Message\Seller\PrivateMessage',
+            'MailAdminProductCreated' => '\MultiMerch\Mail\Message\Admin\ProductCreated',
+            'MailAdminSellerAccountCreated' => '\MultiMerch\Mail\Message\Admin\SellerAccountCreated',
+            'MailAdminSellerAwaitingModeration' => '\MultiMerch\Mail\Message\Admin\SellerAwaitingModeration',
+	        'MailAdminNewProductAwaitingModeration' => '\MultiMerch\Mail\Message\Admin\NewProductAwaitingModeration',
+            'MailAdminEditProductAwaitingModeration' => '\MultiMerch\Mail\Message\Admin\EditProductAwaitingModeration',
+            'MailAdminWithdrawRequestSubmitted' => '\MultiMerch\Mail\Message\Admin\WithdrawRequestSubmitted',
+        )
+    ),
+);

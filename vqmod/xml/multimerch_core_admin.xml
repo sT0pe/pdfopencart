@@ -1,0 +1,1350 @@
+<?xml version="1.0" ?>
+<!DOCTYPE modification [
+]>
+<modification>
+	<id>MultiMerch Core Admin Mods</id>
+	<author>http://multimerch.com/</author>
+
+	<!-- Add MultiMerch to the admin menu -->
+	<file name="admin/controller/common/column_left.php">
+		<operation error="log">
+			<search position="before"><![CDATA[
+			// Stats
+			]]></search>
+			<add><![CDATA[
+				if(version_compare(VERSION, '2.3', '>=')) {
+					MsLoader::getInstance()->getRegistry()->get('language')->load('multiseller/multiseller');
+					$multimerch = array();
+
+					if(MsLoader::getInstance()->MsHelper->isInstalled()) {
+						$multimerch[] = array(
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_sellers'),
+							'href'     => MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/seller', 'token=' . $this->session->data['token'], 'SSL'),
+							'children' => array()
+						);
+
+						$multimerch[] = array(
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_seller_groups'),
+							'href'     => MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/seller-group', 'token=' . $this->session->data['token'], 'SSL'),
+							'children' => array()
+						);
+
+						$multimerch_catalog = array();
+
+						// Attributes
+						$multimerch_catalog[] = array(
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_attributes'),
+							'href'     => MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/attribute', 'token=' . $this->session->data['token'], 'SSL'),
+							'children' => array()
+						);
+
+						// Categories
+						$multimerch_catalog[] = array(
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_categories'),
+							'href'     => MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/category', 'token=' . $this->session->data['token'], 'SSL'),
+							'children' => array()
+						);
+
+						// Options
+						$multimerch_catalog[] = array(
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_options'),
+							'href'     => MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/option', 'token=' . $this->session->data['token'], 'SSL'),
+							'children' => array()
+						);
+
+						// Products
+						$multimerch_catalog[] = array(
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_products'),
+							'href'     => MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/product', 'token=' . $this->session->data['token'], 'SSL'),
+							'children' => array()
+						);
+
+						$multimerch[] = array(
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_catalog'),
+							'href'     => '',
+							'children' => $multimerch_catalog
+						);
+
+						$multimerch[] = array(
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_payment'),
+							'href'     => MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/payment', 'token=' . $this->session->data['token'], 'SSL'),
+							'children' => array()
+						);
+
+						 $multimerch[] = array(
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_payment_request'),
+							'href'     => MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/payment-request', 'token=' . $this->session->data['token'], 'SSL'),
+							'children' => array()
+						);
+
+						 $multimerch[] = array(
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_payment_gateway'),
+							'href'     => MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/payment-gateway', 'token=' . $this->session->data['token'], 'SSL'),
+							'children' => array()
+						);
+
+
+						if($this->config->get('msconf_shipping_type') == 2) {
+							$multimerch[] = array(
+								'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_shipping_method'),
+								'href'     => MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/shipping-method', 'token=' . $this->session->data['token'], 'SSL'),
+								'children' => array()
+							);
+						}
+
+						$multimerch[] = array(
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_transactions'),
+							'href'     => MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/transaction', 'token=' . $this->session->data['token'], 'SSL'),
+							'children' => array()
+						);
+
+						$multimerch[] = array(
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_conversations'),
+							'href'     => MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/conversation', 'token=' . $this->session->data['token'], 'SSL'),
+							'children' => array()
+						);
+
+						$multimerch[] = array(
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_debug_heading'),
+							'href'     => MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/debug', 'token=' . $this->session->data['token'], 'SSL'),
+							'children' => array()
+						);
+
+						$multimerch[] = array(
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_badge'),
+							'href'     => MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/badge', 'token=' . $this->session->data['token'], 'SSL'),
+							'children' => array()
+						);
+
+						$multimerch[] = array(
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_social_links'),
+							'href'     => MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/social_link', 'token=' . $this->session->data['token'], 'SSL'),
+							'children' => array()
+						);
+
+						$multimerch[] = array(
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_settings'),
+							'href'     => MsLoader::getInstance()->getRegistry()->get('url')->link('module/multimerch', 'token=' . $this->session->data['token'], 'SSL'),
+							'children' => array()
+						);
+					} else {
+						$multimerch[] = array(
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_install'),
+							'href'     => MsLoader::getInstance()->getRegistry()->get('url')->link('extension/extension/module/install', 'token=' . $this->session->data['token'] . '&extension=multimerch', 'SSL'),
+							'children' => array()
+						);
+					}
+
+					if($multimerch) {
+						$data['menus'][] = array(
+							'id'       => 'menu-multimerch',
+							'icon'	   => 'fa-users fa-fw',
+							'name'	   => MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_multiseller'),
+							'href'     => '',
+							'children' => $multimerch
+						);
+					}
+				}
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="admin/controller/extension/extension/module.php">
+		<operation error="log">
+			<search position="after" index="1"><![CDATA[
+				$this->session->data['success'] = $this->language->get('text_success');
+			]]></search>
+			<add><![CDATA[
+				if($this->request->get['extension'] == 'multimerch' && file_exists(DIR_APPLICATION . 'controller/module/multimerch.php')) {
+					$this->response->redirect($this->url->link('module/multimerch', 'token=' . $this->session->data['token'], true));
+				}
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="admin/view/template/extension/extension.tpl">
+		<operation error="log">
+			<search position="replace" index="2"><![CDATA[
+				$('#extension').html(html);
+			]]></search>
+			<add><![CDATA[
+				var multimerch_installation = html.indexOf("<!-- MultiMerch settings page -->");
+				if(multimerch_installation != -1) {
+					window.location.href = $('base').attr('href') + "index.php?route=module/multimerch&token=<?php echo $this->session->data['token']; ?>";
+				} else {
+					$('#extension').html(html);
+				}
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="admin/model/localisation/language.php">
+		<!-- adding new language, copy attribute and option names -->
+		<operation>
+			<search position="after"><![CDATA[
+				$language_id = $this->db->getLastId();
+			]]></search>
+			<add><![CDATA[
+				// MultiMerch Seller Group
+				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "ms_seller_group_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+				foreach ($query->rows as $group) {
+					$this->db->query("INSERT INTO " . DB_PREFIX . "ms_seller_group_description SET seller_group_id = '" . (int)$group['seller_group_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($group['name']) . "', description = '" . $this->db->escape($group['description']) . "'");
+				}
+			]]></add>
+		</operation>
+		
+		<!-- deleting language, delete attribute and option names -->
+		<operation>
+			<search position="after"><![CDATA[
+				public function deleteLanguage($language_id) {
+			]]></search>
+			<add><![CDATA[
+				// MultiMerch 
+				$this->db->query("DELETE FROM " . DB_PREFIX . "ms_seller_group_description WHERE language_id = '" . (int)$language_id . "'");
+			]]></add>
+		</operation>		
+	</file>
+	
+	<!-- delete seller account when customer deleted -->
+	<file name="admin/model/sale/customer.php,admin/model/customer/customer.php" error="skip">
+		<operation>
+			<search position="after"><![CDATA[
+				public function deleteCustomer($customer_id) {
+			]]></search>
+			<add><![CDATA[
+				MsLoader::getInstance()->MsSeller->deleteSeller($customer_id);
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="admin/controller/catalog/product.php">
+		<operation>
+			<search position="before"><![CDATA[
+				$this->response->setOutput($this->load->view('catalog/product_form', $data));
+			]]></search>
+			<add><![CDATA[
+				// Get MultiMerch product
+				$ms_product = isset($this->request->get['product_id']) ? $this->MsLoader->MsProduct->getProduct($this->request->get['product_id']) : array();
+
+				if(!empty($ms_product) && isset($ms_product['seller_id'])) {
+					$rates = is_null($ms_product['commission_id']) ? NULL : $this->MsLoader->MsCommission->getCommissionRates($ms_product['commission_id']);
+					$data['product_ms_fee'] = array(
+						'commission_id' => $ms_product['commission_id'],
+						'commission_rates' => $rates
+					);
+				} else {
+					$data['product_ms_fee'] = array();
+				}
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="admin/model/catalog/product.php">
+		<!-- delete multimerch product info when product deleted -->
+		<operation>
+			<search position="after"><![CDATA[
+				public function deleteProduct($product_id) {
+			]]></search>
+			<add><![CDATA[
+				$this->db->query("DELETE FROM " . DB_PREFIX . "ms_product WHERE product_id = '" . (int)$product_id . "'");
+			]]></add>
+		</operation>
+
+		<!-- MM Fees -->
+		<operation>
+			<search position="before"><![CDATA[
+				$this->db->query("DELETE FROM `" . DB_PREFIX . "product_recurring` WHERE product_id = " . (int)$product_id);
+			]]></search>
+			<add><![CDATA[
+				if (!$data['product_ms_fee']['commission_id']) {
+					$commission_id = $this->MsLoader->MsCommission->createCommission($data['product_ms_fee']['commission_rates']);
+				} else {
+					$commission_id = $this->MsLoader->MsCommission->editCommission($data['product_ms_fee']['commission_id'], $data['product_ms_fee']['commission_rates']);
+				}
+
+				$this->db->query("UPDATE `" . DB_PREFIX . "ms_product` SET commission_id = " . (is_null($commission_id) ? 'NULL' : (int)$commission_id) . " WHERE product_id = '" . (int)$product_id . "'");
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="admin/view/template/catalog/product_form.tpl">
+		<!-- MM Shipping tab header -->
+		<operation>
+			<search position="after"><![CDATA[
+				<li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
+			]]></search>
+			<add><![CDATA[
+				<?php if($this->config->get('msconf_shipping_type') == 2) { ?>
+					<li><a href="#tab-shipping" data-toggle="tab"><?php echo $this->language->get('ms_config_shipping'); ?></a></li>
+				<?php } ?>
+			]]></add>
+		</operation>
+
+		<!-- MM Shipping tab content -->
+		<operation>
+			<search position="before"><![CDATA[
+				<div class="tab-pane" id="tab-design">
+			]]></search>
+			<add><![CDATA[
+				<div class="tab-pane" id="tab-shipping">
+					<?php echo sprintf($this->language->get('ms_login_as_vendor'), HTTP_CATALOG . "index.php?route=account/login"); ?>
+				</div>
+			]]></add>
+		</operation>
+
+		<!-- MM Fees tab header -->
+		<operation>
+			<search position="after"><![CDATA[
+				<li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
+			]]></search>
+			<add><![CDATA[
+				<?php if(!empty($product_ms_fee)) { ?>
+					<li><a href="#tab-ms-fees" data-toggle="tab"><?php echo $this->language->get('ms_fees_heading'); ?></a></li>
+				<?php } ?>
+			]]></add>
+		</operation>
+
+		<!-- MM Fees tab content -->
+		<operation>
+			<search position="before"><![CDATA[
+				<div class="tab-pane" id="tab-design">
+			]]></search>
+			<add><![CDATA[
+				<div class="tab-pane" id="tab-ms-fees">
+					<input type="hidden" name="product_ms_fee[commission_id]" value="<?php echo isset($product_ms_fee['commission_id']) ? $product_ms_fee['commission_id'] : ''; ?>" />
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label"><?php echo $this->language->get('ms_commission_' . MsCommission::RATE_SALE); ?></label>
+						<div class="col-sm-10 control-inline">
+							<input type="hidden" name="product_ms_fee[commission_rates][<?php echo MsCommission::RATE_SALE; ?>][rate_id]" value="<?php echo isset($product_ms_fee['commission_rates'][MsCommission::RATE_SALE]['rate_id']) ? $product_ms_fee['commission_rates'][MsCommission::RATE_SALE]['rate_id'] : ''; ?>" />
+							<input type="hidden" name="product_ms_fee[commission_rates][<?php echo MsCommission::RATE_SALE; ?>][rate_type]" value="<?php echo MsCommission::RATE_SALE; ?>" />
+
+							<?php echo $this->currency->getSymbolLeft(); ?>
+							<input type="text" class="form-control" name="product_ms_fee[commission_rates][<?php echo MsCommission::RATE_SALE; ?>][flat]" value="<?php echo isset($product_ms_fee['commission_rates'][MsCommission::RATE_SALE]['flat']) ? $this->currency->format($product_ms_fee['commission_rates'][MsCommission::RATE_SALE]['flat'], $this->config->get('config_currency'), '', FALSE) : '' ?>" size="3"/>
+							<?php echo $this->currency->getSymbolRight(); ?>
+							+<input type="text" class="form-control" name="product_ms_fee[commission_rates][<?php echo MsCommission::RATE_SALE; ?>][percent]" value="<?php echo isset($product_ms_fee['commission_rates'][MsCommission::RATE_SALE]['percent']) ? $product_ms_fee['commission_rates'][MsCommission::RATE_SALE]['percent'] : ''; ?>" size="3"/>%
+						</div>
+					</div>
+				</div>
+
+				<style>
+					#tab-ms-fees .control-inline input {
+						width: auto;
+						display: inline;
+					}
+				</style>
+			]]></add>
+		</operation>
+	</file>
+
+
+	<file name="admin/controller/catalog/category.php">
+		<operation>
+			<search position="before"><![CDATA[
+				$this->response->setOutput($this->load->view('catalog/category_form', $data));
+			]]></search>
+			<add><![CDATA[
+				// Get MultiMerch product
+				$commission_rates = isset($this->request->get['category_id']) ? $this->MsLoader->MsCategory->getOcCategoryCommission($this->request->get['category_id']) : NULL;
+				$data['category_ms_fee'] = array(
+					'commission_rates' => $commission_rates
+				);
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="admin/model/catalog/category.php">
+		<!-- MM Fees -->
+		<operation>
+			<search position="before"><![CDATA[
+				if (isset($data['keyword'])) {
+			]]></search>
+			<add><![CDATA[
+				if (!$data['category_ms_fee']['commission_id']) {
+					$commission_id = $this->MsLoader->MsCommission->createCommission($data['category_ms_fee']['commission_rates']);
+				} else {
+					$commission_id = $this->MsLoader->MsCommission->editCommission($data['category_ms_fee']['commission_id'], $data['category_ms_fee']['commission_rates']);
+				}
+
+				$this->MsLoader->MsCategory->saveCategoryCommission($category_id, $commission_id);
+			]]></add>
+		</operation>
+
+		<operation>
+			<search position="before"><![CDATA[
+				if ($data['keyword']) {
+			]]></search>
+			<add><![CDATA[
+				if (!$data['category_ms_fee']['commission_id']) {
+					$commission_id = $this->MsLoader->MsCommission->createCommission($data['category_ms_fee']['commission_rates']);
+				} else {
+					$commission_id = $this->MsLoader->MsCommission->editCommission($data['category_ms_fee']['commission_id'], $data['category_ms_fee']['commission_rates']);
+				}
+
+				$this->MsLoader->MsCategory->saveCategoryCommission($category_id, $commission_id);
+			]]></add>
+		</operation>
+
+		<operation>
+			<search position="after"><![CDATA[
+				$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_category WHERE category_id = '" . (int)$category_id . "'");
+			]]></search>
+			<add><![CDATA[
+				$this->db->query("DELETE FROM " . DB_PREFIX . "ms_category_commission WHERE category_id = '" . (int)$category_id . "'");
+			]]></add>
+		</operation>
+
+	</file>
+
+	<file name="admin/view/template/catalog/category_form.tpl">
+		<!-- MM Fees tab header -->
+		<operation>
+			<search position="after"><![CDATA[
+				<li><a href="#tab-design" data-toggle="tab"><?php echo $tab_design; ?></a></li>
+			]]></search>
+			<add><![CDATA[
+				<li><a href="#tab-ms-fees" data-toggle="tab"><?php echo $this->language->get('ms_fees_heading'); ?></a></li>
+			]]></add>
+		</operation>
+
+		<!-- MM Fees tab content -->
+		<operation>
+			<search position="before"><![CDATA[
+				<div class="tab-pane" id="tab-design">
+			]]></search>
+			<add><![CDATA[
+				<div class="tab-pane" id="tab-ms-fees">
+					<input type="hidden" name="category_ms_fee[commission_id]" value="<?php echo isset($category_ms_fee['commission_rates']['commission_id']) ? $category_ms_fee['commission_rates']['commission_id'] : ''; ?>" />
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label"><?php echo $this->language->get('ms_commission_' . MsCommission::RATE_SALE); ?></label>
+						<div class="col-sm-10 control-inline">
+							<input type="hidden" name="category_ms_fee[commission_rates][<?php echo MsCommission::RATE_SALE; ?>][rate_id]" value="<?php echo isset($category_ms_fee['commission_rates'][MsCommission::RATE_SALE]['rate_id']) ? $category_ms_fee['commission_rates'][MsCommission::RATE_SALE]['rate_id'] : ''; ?>" />
+							<input type="hidden" name="category_ms_fee[commission_rates][<?php echo MsCommission::RATE_SALE; ?>][rate_type]" value="<?php echo MsCommission::RATE_SALE; ?>" />
+
+							<?php echo $this->currency->getSymbolLeft(); ?>
+							<input type="text" class="form-control" name="category_ms_fee[commission_rates][<?php echo MsCommission::RATE_SALE; ?>][flat]" value="<?php echo isset($category_ms_fee['commission_rates'][MsCommission::RATE_SALE]['flat']) ? $this->currency->format($category_ms_fee['commission_rates'][MsCommission::RATE_SALE]['flat'], $this->config->get('config_currency'), '', FALSE) : '' ?>" size="3"/>
+							<?php echo $this->currency->getSymbolRight(); ?>
+							+<input type="text" class="form-control" name="category_ms_fee[commission_rates][<?php echo MsCommission::RATE_SALE; ?>][percent]" value="<?php echo isset($category_ms_fee['commission_rates'][MsCommission::RATE_SALE]['percent']) ? $category_ms_fee['commission_rates'][MsCommission::RATE_SALE]['percent'] : ''; ?>" size="3"/>%
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label"><?php echo $this->language->get('ms_commission_' . MsCommission::RATE_LISTING); ?></label>
+						<div class="col-sm-10 control-inline">
+							<input type="hidden" name="category_ms_fee[commission_rates][<?php echo MsCommission::RATE_LISTING; ?>][rate_id]" value="<?php echo isset($category_ms_fee['commission_rates'][MsCommission::RATE_LISTING]['rate_id']) ? $category_ms_fee['commission_rates'][MsCommission::RATE_LISTING]['rate_id'] : ''; ?>" />
+							<input type="hidden" name="category_ms_fee[commission_rates][<?php echo MsCommission::RATE_LISTING; ?>][rate_type]" value="<?php echo MsCommission::RATE_LISTING; ?>" />
+
+							<?php echo $this->currency->getSymbolLeft(); ?>
+							<input type="text" class="form-control" name="category_ms_fee[commission_rates][<?php echo MsCommission::RATE_LISTING; ?>][flat]" value="<?php echo isset($category_ms_fee['commission_rates'][MsCommission::RATE_LISTING]['flat']) ? $this->currency->format($category_ms_fee['commission_rates'][MsCommission::RATE_LISTING]['flat'], $this->config->get('config_currency'), '', FALSE) : '' ?>" size="3"/>
+							<?php echo $this->currency->getSymbolRight(); ?>
+							+<input type="text" class="form-control" name="category_ms_fee[commission_rates][<?php echo MsCommission::RATE_LISTING; ?>][percent]" value="<?php echo isset($category_ms_fee['commission_rates'][MsCommission::RATE_LISTING]['percent']) ? $category_ms_fee['commission_rates'][MsCommission::RATE_LISTING]['percent'] : ''; ?>" size="3"/>%
+
+							<select class="form-control" name="category_ms_fee[commission_rates][<?php echo MsCommission::RATE_LISTING; ?>][payment_method]">
+								<optgroup label="<?php echo $this->language->get('ms_payment_method'); ?>">
+									<option value="<?php echo MsPgPayment::METHOD_BALANCE; ?>" <?php if(isset($category_ms_fee['commission_rates'][MsCommission::RATE_LISTING]) && $category_ms_fee['commission_rates'][MsCommission::RATE_LISTING]['payment_method'] == MsPgPayment::METHOD_BALANCE) { ?> selected="selected" <?php } ?>><?php echo $this->language->get('ms_payment_method_balance'); ?></option>
+									<option value="<?php echo MsPgPayment::METHOD_PG; ?>" <?php if(isset($category_ms_fee['commission_rates'][MsCommission::RATE_LISTING]) && $category_ms_fee['commission_rates'][MsCommission::RATE_LISTING]['payment_method'] == MsPgPayment::METHOD_PG) { ?> selected="selected" <?php } ?>><?php echo $this->language->get('ms_pg_fee_payment_method_name'); ?></option>
+								</optgroup>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<style>
+					#tab-ms-fees .control-inline input, #tab-ms-fees .control-inline select {
+						width: auto;
+						display: inline;
+					}
+				</style>
+			]]></add>
+		</operation>
+	</file>
+
+	<!-- multimerch common scripts & db updates -->
+	<file name="admin/controller/common/header.php">
+		<operation>
+			<search position="after"><![CDATA[
+			public function index() {
+			]]></search>
+			<add><![CDATA[
+			$data = array_merge(isset($data) ? $data : array(), MsLoader::getInstance()->getRegistry()->get('load')->language('multiseller/multiseller'));
+			$lang = "view/javascript/multimerch/datatables/lang/" . $this->config->get('config_admin_language') . ".lng";
+			$data['dt_language'] = file_exists(DIR_APPLICATION . $lang) ? "'$lang'" : "undefined";
+
+			$data['mm_missing_files'] = array();
+			$data['mm_unnecessary_files'] = array();
+
+			// Controller fixes file for Opencart < 2.1
+			if (version_compare(VERSION, '2.1', '<') && !file_exists(DIR_CATALOG . '../vqmod/xml/multimerch_oc21x_controllerfix.xml')) {
+				array_push($data['mm_missing_files'], 'vqmod/xml/multimerch_oc21x_controllerfix.xml');
+			} else if (version_compare(VERSION, '2.1', '>=') && file_exists(DIR_CATALOG . '../vqmod/xml/multimerch_oc21x_controllerfix.xml')) {
+				array_push($data['mm_unnecessary_files'], 'vqmod/xml/multimerch_oc21x_controllerfix.xml');
+			}
+
+			// Various fixes file for Opencart < 2.3
+			if(version_compare(VERSION, '2.3', '<') && !file_exists(DIR_CATALOG . '../vqmod/xml/multimerch_pre_oc23_fixes.xml')) {
+				array_push($data['mm_missing_files'], 'vqmod/xml/multimerch_pre_oc23_fixes.xml');
+			} else if (version_compare(VERSION, '2.3', '>=') && file_exists(DIR_CATALOG . '../vqmod/xml/multimerch_pre_oc23_fixes.xml')) {
+				array_push($data['mm_unnecessary_files'], 'vqmod/xml/multimerch_pre_oc23_fixes.xml');
+			}
+
+			// Opencart 2.3.0.x compatibility fixes
+			if(version_compare(VERSION, '2.3', '<') && file_exists(DIR_CATALOG . '../vqmod/xml/multimerch_oc23_compatibility_fixes.xml')) {
+				array_push($data['mm_unnecessary_files'], 'vqmod/xml/multimerch_oc23_compatibility_fixes.xml');
+			} else if (version_compare(VERSION, '2.3', '>=') && !file_exists(DIR_CATALOG . '../vqmod/xml/multimerch_oc23_compatibility_fixes.xml')) {
+				array_push($data['mm_missing_files'], 'vqmod/xml/multimerch_oc23_compatibility_fixes.xml');
+			}
+
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="admin/view/template/common/header.tpl">
+		<operation>
+			<search position="after"><![CDATA[
+				</header>
+			]]></search>
+			<add><![CDATA[
+				<?php if($logged) { ?>
+					<?php if($mm_missing_files || $mm_unnecessary_files) { ?>
+						<div class="alert alert-warning" style="margin: 10px auto; width: 60%;"><i class="fa fa-exclamation-circle"></i>
+							You are running OpenCart <?php echo VERSION; ?>.
+							<?php if (!empty($mm_missing_files)) { ?>
+								<br /><br />The following files are missing on your installation that are needed for your current version of OpenCart:<br /><br />
+								<ul>
+									<?php foreach($mm_missing_files as $file) { ?>
+										<li><?php echo $file; ?></li>
+									<?php } ?>
+								</ul>
+								<br />Please upload them from the latest MultiMerch archive to prevent various errors.<br />
+							<?php } ?>
+
+							<?php if (!empty($mm_unnecessary_files)) { ?>
+								<br /><br />The following files exist on your installation that are not needed for your current version of OpenCart:<br /><br />
+								<ul>
+									<?php foreach($mm_unnecessary_files as $file) { ?>
+										<li><?php echo $file; ?></li>
+									<?php } ?>
+								</ul>
+								<br />Please remove or disable these files to prevent various errors.<br />
+							<?php } ?>
+						</div>
+					<?php } ?>
+
+					<!-- PHP < 5.4 warning message -->
+					<?php if(version_compare(phpversion(), '5.4.0', '<')) { ?>
+						<div class="alert alert-warning" style="text-align:center; margin: 10px auto; width: 90%;"><i class="fa fa-exclamation-circle"></i><?php echo $this->language->get('ms_error_php_version'); ?></div>
+					<?php } ?>
+
+					<?php MsLoader::getInstance()->getRegistry()->get('load')->model('multimerch/upgrade'); ?>
+					<?php if (MsLoader::getInstance()->MsHelper->isInstalled() && !MsLoader::getInstance()->getRegistry()->get('model_multimerch_upgrade')->isDbLatest()) { ?>
+						<div class="alert alert-warning" style="text-align:center; margin: 10px auto; width: 90%;"><i class="fa fa-exclamation-circle"></i><?php echo sprintf($this->language->get('ms_db_upgrade'), $this->url->link('module/multimerch/upgradeDb', 'token=' . $this->session->data['token'], 'SSL'),MsLoader::getInstance()->getRegistry()->get('model_multimerch_upgrade')->getDbVersion(),$this->MsLoader->dbVer); ?></div>
+					<?php } ?>
+					<?php if (MsLoader::getInstance()->MsHelper->isInstalled() && !MsLoader::getInstance()->getRegistry()->get('model_multimerch_upgrade')->isFilesLatest()) { ?>
+						<div class="alert alert-warning" style="text-align:center; margin: 10px auto; width: 90%;"><i class="fa fa-exclamation-circle"></i><?php echo sprintf($this->language->get('ms_files_upgrade'), $this->MsLoader->dbVer,MsLoader::getInstance()->getRegistry()->get('model_multimerch_upgrade')->getDbVersion()); ?></div>
+					<?php } ?>
+				<?php } ?>
+
+				<?php if (isset($this->session->data['ms_db_latest'])) { ?>
+					<div class="alert-success" style="text-align:center; margin: 10px"><?php echo $this->session->data['ms_db_latest']; ?></div>
+					<?php unset($this->session->data['ms_db_latest']); ?>
+				<?php } ?>
+			]]></add>
+		</operation>
+
+		<operation>
+			<search position="before"><![CDATA[
+				<?php foreach ($scripts as $script) { ?>
+			]]></search>
+			<add><![CDATA[
+				<?php global $config; $this->config = $config; ?>
+				<script type="text/javascript"> if (!window.console) console = {log: function() {}}; var msGlobals = { config_limit_admin: '<?php echo $this->config->get('config_limit_admin'); ?>', config_language: <?php echo $dt_language; ?> }; </script>
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="admin/model/sale/order.php">
+		<operation>
+			<search position="replace"><![CDATA[
+				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+				]]></search>
+			<add><![CDATA[
+				$query = $this->db->query("SELECT op.*, opd.* FROM " . DB_PREFIX . "order_product op JOIN " . DB_PREFIX . "ms_order_product_data opd ON (op.order_id = opd.order_id AND op.product_id = opd.product_id) WHERE op.order_id = '" . (int)$order_id . "'");
+				if(empty($query->rows)) {
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+				}
+				]]></add>
+		</operation>
+	</file>
+
+	<file name="admin/controller/sale/order.php">
+		<operation error="log">
+			<search position="after"><![CDATA[
+				public function info() {
+			]]></search>
+			<add><![CDATA[
+				$this->document->addStyle('view/stylesheet/multimerch/multiseller.css');
+			]]></add>
+		</operation>
+
+		<operation>
+			<search position="before"><![CDATA[
+			foreach ($products as $product) {
+			]]></search>
+			<add><![CDATA[
+			$data['mm_shipping_flag'] = 0;
+			]]></add>
+		</operation>
+
+		<operation>
+			<search position="after"><![CDATA[
+			foreach ($products as $product) {
+			]]></search>
+			<add><![CDATA[
+			MsLoader::getInstance()->getRegistry()->get('language')->load('multiseller/multiseller');
+			$data['column_seller'] = MsLoader::getInstance()->getRegistry()->get('language')->get('ms_seller');
+			// todo check
+			$seller = MsLoader::getInstance()->MsSeller->getSeller(
+				MsLoader::getInstance()->MsProduct->getSellerId($product['product_id']),
+				array(
+					'product_id' => $product['product_id']
+				)
+			);
+
+			// Check if any of order products has MM shipping data
+			if(MsLoader::getInstance()->MsOrderData->getOrderProductShippable($product)) {
+				$data['mm_shipping_flag'] += 1;
+			}
+
+			// Get product shipping costs
+			$order_data = MsLoader::getInstance()->MsOrderData->getOrderData($product);
+			$shipping_cost_formatted = $this->currency->format(isset($order_data[0]['shipping_cost']) ? $order_data[0]['shipping_cost'] : 0, $order_info['currency_code'], $order_info['currency_value']);
+			]]></add>
+		</operation>	
+	
+		<operation>
+			<search position="after"><![CDATA[
+			$data['products'][] = array(
+			]]></search>
+			<add><![CDATA[
+			'seller' => array(
+				'seller_id' => isset($seller['seller_id']) ? $seller['seller_id'] : '',
+				'nickname' => isset($seller['ms.nickname']) ? $seller['ms.nickname'] : ''
+			),
+			'shipping_cost_formatted' => $shipping_cost_formatted,
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="replace"><![CDATA[
+				$this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']),
+			]]></search>
+			<add><![CDATA[
+				$this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0) + (isset($product['shipping_cost']) ? $product['shipping_cost'] : 0), $order_info['currency_code'], $order_info['currency_value']),
+			]]></add>
+		</operation>
+
+		<operation>
+			<search position="before"><![CDATA[
+			'product_id' => $product['product_id'],
+			]]></search>
+			<add><![CDATA[
+			'seller' => array(
+				'seller_id' => isset($seller['seller_id']) ? $seller['seller_id'] : '',
+				'nickname' => isset($seller['ms.nickname']) ? $seller['ms.nickname'] : ''
+			),
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="after"><![CDATA[
+			$data['products'] = array();
+			]]></search>
+			<add><![CDATA[
+			$data['seller_histories'] = array();
+
+			$suborders = MsLoader::getInstance()->MsSuborder->getSuborders(array(
+				'order_id' => $this->request->get['order_id']
+			));
+
+			foreach ($suborders as $sub) {
+				$suborder_histories = array();
+
+				$seller = MsLoader::getInstance()->MsSeller->getSellers(array(
+					'seller_id' => $sub['seller_id'],
+					'single' => 1
+				));
+
+				// fetch histories
+				$histories = MsLoader::getInstance()->MsSuborder->getSuborderHistory(array(
+					'suborder_id' => $sub['suborder_id']
+				));
+
+				// format histories
+				foreach ($histories as $h) {
+					$suborder_histories[] = array(
+						'date_added' => date(MsLoader::getInstance()->getRegistry()->get('language')->get('date_format_short'), strtotime($h['date_added'])),
+						'status'     => MsLoader::getInstance()->MsHelper->getStatusName(array('order_status_id' => $h['order_status_id'])),
+						'comment'    => $h['comment']
+					);
+				}
+
+				// assign histories
+				$data['seller_histories'][$sub['seller_id']] = array(
+					'suborder_id' => $sub['suborder_id'],
+					'seller' => isset($seller[0]['ms.nickname']) ? $seller[0]['ms.nickname'] : 'N/A',
+					'suborder_status' => $this->MsLoader->MsHelper->getStatusName(array('order_status_id' => $sub['order_status_id'])),
+					'entries' => $suborder_histories,
+					'suborder_transactions' => $this->MsLoader->MsBalance->getBalanceEntries(array(
+						'seller_id' => $sub['seller_id'],
+						'order_id' => $this->request->get['order_id']
+					))
+				);
+			}
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="admin/view/template/sale/order_info.tpl">
+		<operation>
+			<search position="before"><![CDATA[
+			<td class="text-left"><?php echo $column_product; ?>
+			]]></search>
+			<add><![CDATA[
+			<td class="text-left"><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_seller'); ?></td>
+			]]></add>
+		</operation>
+	
+		<operation>
+			<search position="before"><![CDATA[
+			<td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+			]]></search>
+			<add><![CDATA[
+			<td class="text-left">
+				<?php if (!empty($product['seller']['seller_id'])) { ?>
+					<a href="<?php echo $this->url->link('multimerch/seller/update', 'token=' . $this->session->data['token'] . '&seller_id=' . $product['seller']['seller_id'], 'SSL');?>"><?php echo $product['seller']['nickname']; ?></a>
+				<?php } else { ?>
+					<a href="<?php echo $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');?>"><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_store') ; ?></a>
+				<?php } ?>
+			</td>
+			]]></add>
+		</operation>
+
+		<operation>
+			<search position="after"><![CDATA[
+			<td class="text-right"><?php echo $column_price; ?></td>
+			]]></search>
+			<add><![CDATA[
+			<?php if($this->config->get('msconf_shipping_type') == 2 && $mm_shipping_flag) { ?>
+				<td class="text-right"><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_sale_order_shipping_cost'); ?></td>
+			<?php } ?>
+			]]></add>
+		</operation>
+
+		<operation>
+			<search position="after"><![CDATA[
+			<td class="text-right"><?php echo $product['price']; ?></td>
+			]]></search>
+			<add><![CDATA[
+			<?php if($this->config->get('msconf_shipping_type') == 2 && $mm_shipping_flag) { ?>
+				<td class="text-right"><?php echo $product['shipping_cost_formatted']; ?></td>
+			<?php } ?>
+			]]></add>
+		</operation>
+
+		<operation>
+			<search position="replace"><![CDATA[
+			<td colspan="4" class="text-right"><?php echo $total['title']; ?></td>
+			]]></search>
+			<add><![CDATA[
+			<td colspan="<?php echo ($this->config->get('msconf_shipping_type') == 2  && $mm_shipping_flag) ? '6' : '5'; ?>" class="text-right"><?php echo $total['title']; ?>:</td>
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="before" offset="1"><![CDATA[
+				<script type="text/javascript"><!--
+			]]></search>
+			<add><![CDATA[
+				<div class="panel panel-default ms-suborder-history">
+					<div class="panel-heading">
+						<h3 class="panel-title"><i class="fa fa-comment-o"></i> <?php echo $this->language->get('ms_order_details_by_seller'); ?></h3>
+					</div>
+					<div class="panel-body">
+						<?php if (isset($seller_histories) && $seller_histories) { ?>
+							<ul class="nav nav-tabs">
+								<?php foreach ($seller_histories as $history) { ?>
+									<li <?php if ($history === reset($seller_histories)) { ?>class="active"<?php } ?>><a href="#seller_tab<?php echo $history['suborder_id']; ?>" data-toggle="tab"><?php echo $history['seller'] . ' (#' . $order_id . '-' . $history['suborder_id'] . ')'; ?></a></li>
+								<?php } ?>
+							</ul>
+
+							<div class="tab-content">
+								<?php foreach ($seller_histories as $history) { ?>
+									<div class="tab-pane <?php if ($history === reset($seller_histories)) { ?>active<?php } ?>" id="seller_tab<?php echo $history['suborder_id']; ?>">
+										<div class="suborder-info">
+											<ul>
+												<li><?php echo $this->language->get('ms_order_products_by'); ?> <b><?php echo $history['seller']; ?></b></li>
+												<li><?php echo $this->language->get('ms_order_id'); ?> <b><?php echo '#' . $order_id . '-' . $history['suborder_id']; ?></b></li>
+												<li><?php echo $this->language->get('ms_order_current_status'); ?> <b><?php echo $this->MsLoader->MsHelper->getStatusName(array('order_status_id' => $history['suborder_status'])); ?></b></li>
+											</ul>
+										</div>
+
+										<h4><?php echo $this->language->get('ms_order_transactions'); ?></h3>
+										<table class="table table-responsive table-bordered table-hover text-center list">
+											<thead>
+												<tr>
+													<td><?php echo $this->language->get('ms_order_date_created'); ?></td>
+													<td><?php echo $this->language->get('ms_order_transactions_description'); ?></td>
+													<td><?php echo $this->language->get('ms_order_transactions_amount'); ?></td>
+												</tr>
+											</thead>
+
+											<tbody>
+												<?php if ($history['suborder_transactions']) { ?>
+													<?php foreach ($history['suborder_transactions'] as $transaction) { ?>
+														<tr>
+															<td class="col-sm-3"><?php echo date($this->language->get('date_format_short'), strtotime($transaction['mb.date_created'])); ?></td>
+															<td class="col-sm-6"><?php echo (utf8_strlen($transaction['mb.description']) > 80 ? mb_substr($transaction['mb.description'], 0, 80) . '...' : $transaction['mb.description']); ?></td>
+															<td class="col-sm-3"><?php echo $this->currency->format($transaction['amount'], $this->config->get('config_currency')); ?></td>
+														</tr>
+													<?php } ?>
+												<?php } else { ?>
+													<td colspan="3" style="padding: 25px;border: 1px solid #e8e8e8;"><?php echo $this->language->get('ms_order_notransactions'); ?></td>
+												<?php } ?>
+											</tbody>
+										</table>
+
+										<?php if(!empty($history['entries'])) { ?>
+											<h4><?php echo $this->language->get('ms_order_history'); ?></h4>
+											<table class="table table-responsive table-bordered table-hover text-center list">
+												<thead>
+													<tr>
+														<td><?php echo $this->language->get('column_date_added'); ?></td>
+														<td><?php echo $this->language->get('column_comment'); ?></td>
+														<td><?php echo $this->language->get('column_status'); ?></td>
+													</tr>
+												</thead>
+												<tbody>
+													<?php foreach ($history['entries'] as $he) { ?>
+														<tr>
+															<td class="col-sm-3"><?php echo $he['date_added']; ?></td>
+															<td class="col-sm-6"><?php echo nl2br($he['comment']); ?></td>
+															<td class="col-sm-3"><?php echo $he['status']; ?></td>
+														</tr>
+													<?php } ?>
+												</tbody>
+											</table>
+										<?php } ?>
+									</div>
+								<?php } ?>
+							</div>
+						<?php } ?>
+					</div>
+				</div>
+			]]></add>
+		</operation>
+	</file>
+
+	<!-- contact all sellers from admin -->
+	<file name="admin/view/template/marketing/contact.tpl">
+		<operation>
+			<search position="after"><![CDATA[
+				<option value="affiliate"><?php echo $text_affiliate; ?></option>
+			]]></search>
+			<add><![CDATA[
+				<option value="seller_all"><?php echo $text_seller_all; ?></option>
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="admin/controller/marketing/contact.php">
+		<operation>
+			<search position="after"><![CDATA[
+				public function index() {
+			]]></search>
+			<add><![CDATA[
+				MsLoader::getInstance()->getRegistry()->get('language')->load('multiseller/multiseller');
+				$data['text_seller_all'] = MsLoader::getInstance()->getRegistry()->get('language')->get('ms_all_sellers');
+			]]></add>
+		</operation>
+
+		<operation>
+			<search position="before"><![CDATA[
+				case 'product':
+			]]></search>
+			<add><![CDATA[
+				case 'seller_all':
+					$email_total = MsLoader::getInstance()->MsSeller->getTotalSellers(array(
+						'seller_status' => array(MsSeller::STATUS_ACTIVE)
+					));
+					
+					$results = MsLoader::getInstance()->MsSeller->getSellers(
+						array(
+							'seller_status' => array(MsSeller::STATUS_ACTIVE)
+						),
+						array(
+							'order_by'	=> 'ms.nickname',
+							'order_way'	=> 'ASC',
+							'offset'		=> ($page - 1) * 10,
+							'limit'		=> 10,
+						)
+					);
+					
+					foreach ($results as $result) {
+						$emails[] = $result['c.email'];
+					}
+					break;
+			]]></add>
+		</operation>
+	</file>
+
+	<!-- START Seller attributes -->
+	<file name="admin/controller/catalog/attribute.php">
+		<operation error="log">
+			<search position="before"><![CDATA[
+				$this->response->setOutput($this->load->view('catalog/attribute_form', $data));
+			]]></search>
+			<add><![CDATA[
+				$this->load->language('multiseller/multiseller');
+
+				$data['sellers'] = $this->MsLoader->MsSeller->getSellers(
+					array(
+						'seller_status' => array(MsSeller::STATUS_ACTIVE, MsSeller::STATUS_INACTIVE)
+					),
+					array(
+						'order_by'  => 'ms.nickname',
+						'order_way' => 'ASC'
+					)
+				);
+
+				if(isset($this->request->get['attribute_id'])) {
+					$data['attribute_info'] = $this->MsLoader->MsAttribute->getAttributes(array('attribute_id' => $this->request->get['attribute_id'], 'single' => 1));
+				}
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="before" index="2"><![CDATA[
+				$this->response->redirect($this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . $url, true));
+			]]></search>
+			<add><![CDATA[
+				if(isset($this->request->post['referrer']) && strpos($this->request->post['referrer'], 'multimerch/attribute')) {
+					$this->response->redirect($this->url->link('multimerch/attribute', 'token=' . $this->session->data['token'], true));
+				}
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="replace"><![CDATA[
+				$results = $this->model_catalog_attribute->getAttributes($filter_data);
+			]]></search>
+			<add><![CDATA[
+				$results = $this->model_catalog_attribute->getAttributes(array_merge($filter_data, array(
+					'ms_statuses' => array(
+						MsAttribute::STATUS_ACTIVE,
+						MsAttribute::STATUS_INACTIVE,
+						MsAttribute::STATUS_APPROVED
+					)
+				)));
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="admin/model/catalog/attribute.php">
+		<operation error="log">
+			<search position="before"><![CDATA[
+				return $attribute_id;
+			]]></search>
+			<add><![CDATA[
+				if(isset($data['seller_id']) && isset($data['attribute_status'])) {
+					$this->MsLoader->MsAttribute->createOrUpdateMsAttribute($attribute_id, $data);
+				}
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="after" index="2" offset="1"><![CDATA[
+				$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_description
+			]]></search>
+			<add><![CDATA[
+				if(isset($data['seller_id']) && isset($data['attribute_status'])) {
+					$this->MsLoader->MsAttribute->createOrUpdateMsAttribute($attribute_id, $data);
+				}
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="after" index="2"><![CDATA[
+				$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_description
+			]]></search>
+			<add><![CDATA[
+				$this->MsLoader->MsAttribute->deleteAttribute($attribute_id);
+			]]></add>
+		</operation>
+
+		<!-- Edit opencart get attributes method to apply statuses -->
+		<operation error="log">
+			<search position="replace"><![CDATA[
+				WHERE ad.language_id = '"
+			]]></search>
+			<add><![CDATA[
+				LEFT JOIN (SELECT attribute_id as `a_id`, seller_id, attribute_status FROM `" . DB_PREFIX . "ms_attribute`) msa ON (a.attribute_id = msa.a_id) WHERE ad.language_id = '"
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="before"><![CDATA[
+				if (!empty($data['filter_attribute_group_id'])) {
+			]]></search>
+			<add><![CDATA[
+				if (!empty($data['ms_statuses'])) {
+					$sql .= " AND (msa.attribute_status IS NULL OR msa.attribute_status IN (";
+					foreach($data['ms_statuses'] as $status_id) {
+						$sql .= ($status_id . ($status_id !== end($data['ms_statuses']) ? "," : ""));
+					}
+					$sql .= "))";
+				}
+
+				// make only global attributes available for admin
+				$sql .= " AND (msa.seller_id = 0 OR msa.seller_id IS NULL)";
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="admin/view/template/catalog/attribute_form.tpl">
+		<operation error="log">
+			<search position="before" index="3"><![CDATA[
+				<div class="form-group
+			]]></search>
+			<add><![CDATA[
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><?php echo $this->language->get('ms_catalog_attribute_attach_to_seller'); ?></label>
+					<div class="col-sm-10">
+						<select name="seller_id" class="form-control">
+							<option value="0"><?php echo $this->language->get('ms_catalog_attribute_all_sellers'); ?></option>
+							<?php if (isset($sellers)) { ?>
+								<?php foreach ($sellers as $s) { ?>
+									<option value="<?php echo $s['seller_id']; ?>" <?php echo (isset($attribute_info) && isset($attribute_info['seller_id']) && (int)$s['seller_id'] == (int)$attribute_info['seller_id']) ? 'selected="selected"' : ''; ?>><?php echo $s['ms.nickname']; ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><?php echo $this->language->get('ms_config_status'); ?></label>
+					<div class="col-sm-10">
+						<select name="attribute_status" class="form-control">
+							<?php $msAttribute = new ReflectionClass('MsAttribute'); ?>
+							<?php foreach ($msAttribute->getConstants() as $cname => $cval) { ?>
+								<?php if (strpos($cname, 'STATUS_') !== FALSE) { ?>
+									<option value="<?php echo $cval; ?>" <?php echo (isset($attribute_info) && isset($attribute_info['attribute_status']) && (int)$cval == (int)$attribute_info['attribute_status']) ? 'selected="selected"' : ''; ?>><?php echo $this->language->get('ms_seller_attribute_status_' . $cval); ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<input type="hidden" name="referrer" value="" />
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="before"><![CDATA[
+				<?php echo $footer; ?>
+			]]></search>
+			<add><![CDATA[
+				<script>
+					$(function() {
+						$('input[name="referrer"]').val(document.referrer);
+					});
+				</script>
+			]]></add>
+		</operation>
+	</file>
+	<!-- END Seller attributes -->
+
+	<!-- START Seller attribute groups -->
+	<file name="admin/controller/catalog/attribute_group.php">
+		<operation error="log">
+			<search position="before"><![CDATA[
+				$this->response->setOutput($this->load->view('catalog/attribute_group_form', $data));
+			]]></search>
+			<add><![CDATA[
+				$this->load->language('multiseller/multiseller');
+
+				$data['sellers'] = $this->MsLoader->MsSeller->getSellers(
+					array(
+						'seller_status' => array(MsSeller::STATUS_ACTIVE, MsSeller::STATUS_INACTIVE)
+					),
+					array(
+						'order_by'  => 'ms.nickname',
+						'order_way' => 'ASC'
+					)
+				);
+
+				if(isset($this->request->get['attribute_group_id'])) {
+					$data['attribute_group_info'] = $this->MsLoader->MsAttribute->getAttributeGroups(array('attribute_group_id' => $this->request->get['attribute_group_id'], 'single' => 1));
+				}
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="before" index="2"><![CDATA[
+				$this->response->redirect($this->url->link('catalog/attribute_group', 'token=' . $this->session->data['token'] . $url, true));
+			]]></search>
+			<add><![CDATA[
+				if(isset($this->request->post['referrer']) && strpos($this->request->post['referrer'], 'multimerch/attribute')) {
+					$this->response->redirect($this->url->link('multimerch/attribute', 'token=' . $this->session->data['token'], true));
+				}
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="admin/model/catalog/attribute_group.php">
+		<operation error="log">
+			<search position="before"><![CDATA[
+				return $attribute_group_id;
+			]]></search>
+			<add><![CDATA[
+				if(isset($data['seller_id']) && isset($data['attribute_group_status'])) {
+					$this->MsLoader->MsAttribute->createOrUpdateMsAttributeGroup(array_merge($data, array('attribute_group_id' => $attribute_group_id)));
+				}
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="after" index="2" offset="1"><![CDATA[
+				$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_group_description
+			]]></search>
+			<add><![CDATA[
+				if(isset($data['seller_id']) && isset($data['attribute_group_status'])) {
+					$this->MsLoader->MsAttribute->createOrUpdateMsAttributeGroup($attribute_group_id, $data);
+				}
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="after" index="2"><![CDATA[
+				$this->db->query("DELETE FROM " . DB_PREFIX . "attribute_group_description
+			]]></search>
+			<add><![CDATA[
+				$this->MsLoader->MsAttribute->deleteAttributeGroup($attribute_group_id);
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="admin/view/template/catalog/attribute_group_form.tpl">
+		<operation error="log">
+			<search position="before" index="2"><![CDATA[
+				<div class="form-group
+			]]></search>
+			<add><![CDATA[
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="input-sort-order"><?php echo $this->language->get('ms_catalog_attribute_attach_to_seller'); ?></label>
+					<div class="col-sm-10">
+						<select name="seller_id" class="form-control">
+							<option value="0"><?php echo $this->language->get('ms_catalog_attribute_all_sellers'); ?></option>
+							<?php if (isset($sellers)) { ?>
+								<?php foreach ($sellers as $s) { ?>
+									<option value="<?php echo $s['seller_id']; ?>" <?php echo (isset($attribute_group_info) && isset($attribute_group_info['seller_id']) && (int)$s['seller_id'] == (int)$attribute_group_info['seller_id']) ? 'selected="selected"' : ''; ?>><?php echo $s['ms.nickname']; ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><?php echo $this->language->get('ms_config_status'); ?></label>
+					<div class="col-sm-10">
+						<select name="attribute_group_status" class="form-control">
+							<?php $msAttribute = new ReflectionClass('MsAttribute'); ?>
+							<?php foreach ($msAttribute->getConstants() as $cname => $cval) { ?>
+								<?php if (strpos($cname, 'STATUS_') !== FALSE) { ?>
+									<option value="<?php echo $cval; ?>" <?php echo (isset($attribute_group_info) && isset($attribute_group_info['attribute_group_status']) && (int)$cval == (int)$attribute_group_info['attribute_group_status']) ? 'selected="selected"' : ''; ?>><?php echo $this->language->get('ms_seller_attribute_status_' . $cval); ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<input type="hidden" name="referrer" value="" />
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="before"><![CDATA[
+				<?php echo $footer; ?>
+			]]></search>
+			<add><![CDATA[
+				<script>
+					$(function() {
+						$('input[name="referrer"]').val(document.referrer);
+					});
+				</script>
+			]]></add>
+		</operation>
+	</file>
+	<!-- END Seller attribute groups -->
+
+	<!-- START Seller options -->
+	<file name="admin/controller/catalog/option.php">
+		<operation error="log">
+			<search position="before"><![CDATA[
+				$this->response->setOutput($this->load->view('catalog/option_form', $data));
+			]]></search>
+			<add><![CDATA[
+				$this->load->language('multiseller/multiseller');
+
+				$data['sellers'] = $this->MsLoader->MsSeller->getSellers(
+					array(
+						'seller_status' => array(MsSeller::STATUS_ACTIVE, MsSeller::STATUS_INACTIVE)
+					),
+					array(
+						'order_by'  => 'ms.nickname',
+						'order_way' => 'ASC'
+					)
+				);
+
+				if(isset($this->request->get['option_id'])) {
+					$data['option_info'] = $this->MsLoader->MsOption->getOptions(array('option_id' => $this->request->get['option_id'], 'single' => 1));
+				}
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="replace"><![CDATA[
+				$options = $this->model_catalog_option->getOptions($filter_data);
+			]]></search>
+			<add><![CDATA[
+				$options = $this->model_catalog_option->getOptions(array_merge($filter_data, array(
+					'ms_statuses' => array(
+						MsOption::STATUS_ACTIVE,
+						MsOption::STATUS_INACTIVE,
+						MsOption::STATUS_APPROVED
+					)
+				)));
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="before" index="2"><![CDATA[
+				$this->response->redirect($this->url->link('catalog/option', 'token=' . $this->session->data['token'] . $url, true));
+			]]></search>
+			<add><![CDATA[
+				if(isset($this->request->post['referrer']) && strpos($this->request->post['referrer'], 'multimerch/option')) {
+					$this->response->redirect($this->url->link('multimerch/option', 'token=' . $this->session->data['token'], true));
+				}
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="admin/model/catalog/option.php">
+		<operation error="log">
+			<search position="before"><![CDATA[
+				return $option_id;
+			]]></search>
+			<add><![CDATA[
+				if(isset($data['seller_id']) && isset($data['option_status'])) {
+					$this->MsLoader->MsOption->createOrUpdateMsOption($option_id, $data);
+				}
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="after" index="2" offset="1"><![CDATA[
+				$this->db->query("INSERT INTO " . DB_PREFIX . "option_description
+			]]></search>
+			<add><![CDATA[
+				if(isset($data['seller_id']) && isset($data['option_status'])) {
+					$this->MsLoader->MsOption->createOrUpdateMsOption($option_id, $data);
+				}
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="after" index="2"><![CDATA[
+				$this->db->query("DELETE FROM " . DB_PREFIX . "option_description
+			]]></search>
+			<add><![CDATA[
+				$this->MsLoader->MsOption->deleteOption($option_id);
+			]]></add>
+		</operation>
+
+		<!-- Edit opencart get options method to apply statuses -->
+		<operation error="log">
+			<search position="replace"><![CDATA[
+				WHERE od.language_id = '"
+			]]></search>
+			<add><![CDATA[
+				LEFT JOIN (SELECT option_id as `o_id`, seller_id, option_status FROM `" . DB_PREFIX . "ms_option`) mso ON (o.option_id = mso.o_id) WHERE od.language_id = '"
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="before"><![CDATA[
+				$sort_data = array(
+			]]></search>
+			<add><![CDATA[
+				if (!empty($data['ms_statuses'])) {
+					$sql .= " AND (mso.option_status IS NULL OR mso.option_status IN (";
+					foreach($data['ms_statuses'] as $status_id) {
+						$sql .= ($status_id . ($status_id !== end($data['ms_statuses']) ? "," : ""));
+					}
+					$sql .= "))";
+				}
+
+				// make only global attributes available for admin
+				$sql .= " AND (mso.seller_id = 0 OR mso.seller_id IS NULL)";
+			]]></add>
+		</operation>
+
+	</file>
+
+	<file name="admin/view/template/catalog/option_form.tpl">
+		<operation error="log">
+			<search position="before" index="3"><![CDATA[
+				<div class="form-group
+			]]></search>
+			<add><![CDATA[
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><?php echo $this->language->get('ms_catalog_option_attach_to_seller'); ?></label>
+					<div class="col-sm-10">
+						<select name="seller_id" class="form-control">
+							<option value="0"><?php echo $this->language->get('ms_catalog_option_all_sellers'); ?></option>
+							<?php if (isset($sellers)) { ?>
+								<?php foreach ($sellers as $s) { ?>
+									<option value="<?php echo $s['seller_id']; ?>" <?php echo (isset($option_info) && isset($option_info['seller_id']) && (int)$s['seller_id'] == (int)$option_info['seller_id']) ? 'selected="selected"' : ''; ?>><?php echo $s['ms.nickname']; ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><?php echo $this->language->get('ms_config_status'); ?></label>
+					<div class="col-sm-10">
+						<select name="option_status" class="form-control">
+							<?php $msOption = new ReflectionClass('MsOption'); ?>
+							<?php foreach ($msOption->getConstants() as $cname => $cval) { ?>
+								<?php if (strpos($cname, 'STATUS_') !== FALSE) { ?>
+									<option value="<?php echo $cval; ?>" <?php echo (isset($option_info) && isset($option_info['option_status']) && (int)$cval == (int)$option_info['option_status']) ? 'selected="selected"' : ''; ?>><?php echo $this->language->get('ms_seller_option_status_' . $cval); ?></option>
+								<?php } ?>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<input type="hidden" name="referrer" value="" />
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="before"><![CDATA[
+				<?php echo $footer; ?>
+			]]></search>
+			<add><![CDATA[
+				<script>
+					$(function() {
+						$('input[name="referrer"]').val(document.referrer);
+					});
+				</script>
+			]]></add>
+		</operation>
+	</file>
+	<!-- END Seller options -->
+</modification>

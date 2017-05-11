@@ -1,0 +1,20 @@
+.sender .card_info, .receiver .card_info {
+    border: 1px solid #E5E5E5;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    width: 300px;
+    float: left;
+    position: relative;
+}
+
+.sender .card_info h4, .receiver .card_info h4 {
+    margin-bottom: 20px;
+}
+
+.buttons {
+    width: 100%;
+    margin-top: 10px;
+    display: inline-block;
+    padding-right: 50px;
+}

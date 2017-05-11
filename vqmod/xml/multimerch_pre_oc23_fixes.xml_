@@ -1,0 +1,164 @@
+<?xml version="1.0" ?>
+<!DOCTYPE modification [
+]>
+<modification>
+    <id>MultiMerch Core OC pre-2.3 fixes</id>
+    <author>http://multimerch.com/</author>
+
+    <file name="catalog/controller/total/shipping.php" error="skip">
+        <operation error="skip">
+            <search position="replace"><![CDATA[
+				if ($this->config->get('shipping_status') && $this->config->get('shipping_estimator') && $this->cart->hasShipping()) {
+			]]></search>
+            <add><![CDATA[
+				if ($this->config->get('shipping_status') && $this->config->get('shipping_estimator') && $this->cart->hasShipping() && (int)$this->config->get('msconf_shipping_type') !== 2) {
+			]]></add>
+        </operation>
+    </file>
+
+    <file name="admin/view/template/common/menu.tpl" error="skip">
+        <operation error="skip">
+            <search position="after" offset="4"><![CDATA[
+			<?php echo $report_affiliate_activity; ?>
+			]]></search>
+            <add><![CDATA[
+			    <?php MsLoader::getInstance()->getRegistry()->get('language')->load('multiseller/multiseller'); ?>
+				<li id="multimerch"><a class="parent"><i class="fa fa-users fa-fw"></i> <span><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_multiseller'); ?></span></a>
+					<ul>
+						<?php if(MsLoader::getInstance()->MsHelper->isInstalled()):?>
+						<li><a href="<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/seller', 'token=' . $this->session->data['token'], 'SSL'); ?>"><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_sellers'); ?></a></li>
+						<li><a href="<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/seller-group', 'token=' . $this->session->data['token'], 'SSL'); ?>"><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_seller_groups'); ?></a></li>
+						<li><a href="<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/product', 'token=' . $this->session->data['token'], 'SSL'); ?>"><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_products'); ?></a></li>
+						<li><a href="<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/payment', 'token=' . $this->session->data['token'], 'SSL'); ?>"><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_payment'); ?></a></li>
+						<li><a href="<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/payment-request', 'token=' . $this->session->data['token'], 'SSL'); ?>"><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_payment_request'); ?></a></li>
+						<li><a href="<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/payment-gateway', 'token=' . $this->session->data['token'], 'SSL'); ?>"><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_payment_gateway'); ?></a></li>
+
+						<?php if($this->config->get('msconf_shipping_type') == 2) { ?>
+						<li><a href="<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/shipping-method', 'token=' . $this->session->data['token'], 'SSL'); ?>"><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_shipping_method'); ?></a></li>
+						<?php } ?>
+
+						<li><a href="<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/transaction', 'token=' . $this->session->data['token'], 'SSL'); ?>"><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_transactions'); ?></a></li>
+						<li><a href="<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/debug', 'token=' . $this->session->data['token'], 'SSL'); ?>"><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_debug_heading'); ?></a></li>
+
+						<li><a href="<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/badge', 'token=' . $this->session->data['token'], 'SSL'); ?>"><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_badge'); ?></a></li>
+						<li><a href="<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('multimerch/social_link', 'token=' . $this->session->data['token'], 'SSL'); ?>"><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_social_links'); ?></a></li>
+
+						<li><a href="<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('module/multimerch', 'token=' . $this->session->data['token'], 'SSL'); ?>"><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_settings'); ?></a></li>
+						<?php else:?>
+							 <li><a href="<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('extension/module/install', 'token=' . $this->session->data['token'].'&extension=multimerch', 'SSL'); ?>"><?php echo MsLoader::getInstance()->getRegistry()->get('language')->get('ms_menu_install'); ?></a></li>
+						<?php endif;?>
+					</ul>
+				</li>
+			]]></add>
+        </operation>
+    </file>
+
+    <file name="catalog/controller/module/account.php" error="skip">
+        <operation error="skip">
+            <search position="after"><![CDATA[
+				public function index() {
+			]]></search>
+            <add><![CDATA[
+				return MsLoader::getInstance()->getRegistry()->get('load')->controller('multimerch/module_account');
+			]]></add>
+        </operation>
+    </file>
+
+    <file name="admin/controller/total/mm_shipping_total.php" error="skip">
+        <operation error="skip">
+            <search position="replace"><![CDATA[
+				$this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
+			]]></search>
+            <add><![CDATA[
+				$this->response->redirect($this->url->link('extension/total', 'token=' . $this->session->data['token'], true));
+			]]></add>
+        </operation>
+    </file>
+
+    <file name="admin/controller/payment/ms_pp_adaptive.php" error="skip">
+        <operation error="skip">
+            <search position="replace"><![CDATA[
+                $this->data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], 'SSL');
+			]]></search>
+            <add><![CDATA[
+                $this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
+			]]></add>
+        </operation>
+    </file>
+
+    <file name="catalog/controller/seller/account-order.php" error="skip">
+        <operation error="skip">
+            <search position="replace"><![CDATA[
+                $this->load->model('extension/total/shipping');
+			]]></search>
+            <add><![CDATA[
+                $this->load->model('total/shipping');
+			]]></add>
+        </operation>
+    </file>
+
+    <file name="admin/controller/module/multimerch.php" error="skip">
+        <operation error="skip">
+            <search position="replace"><![CDATA[
+				$this->data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], 'SSL');
+			]]></search>
+            <add><![CDATA[
+                $this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
+			]]></add>
+        </operation>
+    </file>
+
+    <file name="admin/controller/total/mm_shipping_total.php" error="skip">
+        <operation error="skip">
+            <search position="replace"><![CDATA[
+				$data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], true);
+			]]></search>
+            <add><![CDATA[
+                $data['cancel'] = $this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL');
+			]]></add>
+        </operation>
+    </file>
+
+    <file name="admin/controller/module/multimerch_newsellers.php,admin/controller/module/multimerch_topsellers.php" error="skip">
+        <operation error="skip">
+            <search position="replace"><![CDATA[
+                $this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], 'SSL'));
+			]]></search>
+            <add><![CDATA[
+                $this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
+			]]></add>
+        </operation>
+        <operation error="skip">
+            <search position="replace"><![CDATA[
+				'href' => $this->url->link('extension/extension', '', 'SSL'),
+			]]></search>
+            <add><![CDATA[
+                'href' => $this->url->link('extension/module', '', 'SSL'),
+			]]></add>
+        </operation>
+        <operation error="skip">
+            <search position="replace"><![CDATA[
+                'href' => $this->url->link("extension/module/{$this->name}", '', 'SSL'),
+			]]></search>
+            <add><![CDATA[
+                'href' => $this->url->link("module/{$this->name}", '', 'SSL'),
+			]]></add>
+        </operation>
+        <operation error="skip">
+            <search position="replace"><![CDATA[
+				$this->data['action'] = $this->url->link("extension/module/{$this->name}"
+			]]></search>
+            <add><![CDATA[
+                $this->data['action'] = $this->url->link("module/{$this->name}"
+			]]></add>
+        </operation>
+        <operation error="skip">
+            <search position="replace"><![CDATA[
+				$this->data['cancel'] = $this->url->link('extension/module'
+			]]></search>
+            <add><![CDATA[
+                $this->data['cancel'] = $this->url->link('extension/extension'
+			]]></add>
+        </operation>
+    </file>
+</modification>

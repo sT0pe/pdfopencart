@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<!DOCTYPE modification [
+]>
+<modification>
+	<file name="catalog/controller/account/account.php">
+		<operation>
+			<search position="after"><![CDATA[
+				public function index() {
+			]]></search>
+			<add><![CDATA[
+				return MsLoader::getInstance()->getRegistry()->get('load')->controller('multimerch/account_account');
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/controller/account/order.php">
+		<operation>
+			<search position="after"><![CDATA[
+				public function index() {
+			]]></search>
+			<add><![CDATA[
+				return MsLoader::getInstance()->getRegistry()->get('load')->controller('multimerch/account_order');
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/controller/extension/module/account.php">
+		<operation>
+			<search position="after"><![CDATA[
+				public function index() {
+			]]></search>
+			<add><![CDATA[
+				return MsLoader::getInstance()->getRegistry()->get('load')->controller('multimerch/module_account');
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="catalog/controller/checkout/shipping_method.php">
+		<operation>
+			<search position="after"><![CDATA[
+				public function index() {
+			]]></search>
+			<add><![CDATA[
+				if((int)$this->config->get('msconf_shipping_type') == 2) {
+					return MsLoader::getInstance()->getRegistry()->get('load')->controller('multimerch/checkout_shipping_method');
+				}
+			]]></add>
+		</operation>
+	</file>
+</modification>

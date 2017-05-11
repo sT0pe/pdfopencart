@@ -1,0 +1,321 @@
+<?xml version="1.0" ?>
+<!DOCTYPE modification [
+]>
+<modification>
+	<id>MultiMerch Digital Multivendor Marketplace Core</id>
+	<author>http://multimerch.com/</author>
+
+	<!-- MultiMerch Loader startup -->
+    <file name="system/startup.php">
+        <operation error="log">
+            <search position="replace"><![CDATA[
+require_once(modification(DIR_SYSTEM . 'engine/loader.php'));
+			]]></search>
+            <add><![CDATA[
+// Init MultiMerch loaders
+require_once DIR_SYSTEM . '/vendor/multimerchlib/module/init_multimerch.php';
+            ]]></add>
+        </operation>
+
+        <operation error="log">
+            <search position="replace"><![CDATA[
+require_once(modification(DIR_SYSTEM . 'engine/controller.php'));
+			]]></search>
+            <add><![CDATA[//require_once(modification(DIR_SYSTEM . 'engine/controller.php'));]]></add>
+        </operation>
+
+		<operation error="log">
+			<search position="after"><![CDATA[
+                function start($application_config) {
+            ]]></search>
+			<add><![CDATA[
+                if(version_compare(VERSION, '2.3', '>=')) {
+                    // fix scope of variables for MultiMerch files
+                    global $registry;
+                    global $config;
+                }
+            ]]></add>
+		</operation>
+    </file>
+
+	<!-- Enable "-" in routes -->
+	<file name="system/engine/action.php">
+		<operation error="log">
+			<search position="replace"><![CDATA[$parts = explode('/', preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route));]]></search>
+			<add><![CDATA[$parts = explode('/', preg_replace('/[^a-zA-Z0-9\-_\/]/', '', (string)$route));]]></add>
+		</operation>
+	</file>
+
+	<file name="admin/controller/startup/router.php" error="skip">
+		<operation error="skip">
+			<search position="replace"><![CDATA[
+                $route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+			]]></search>
+			<add><![CDATA[
+				$route = preg_replace('/[^a-zA-Z0-9-_\/]/', '', (string)$route);
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="catalog/controller/startup/router.php" error="skip">
+		<operation error="skip">
+			<search position="replace"><![CDATA[
+                $route = preg_replace('/[^a-zA-Z0-9_\/]/', '', (string)$route);
+			]]></search>
+			<add><![CDATA[
+				$route = preg_replace('/[^a-zA-Z0-9-_\/]/', '', (string)$route);
+			]]></add>
+		</operation>
+	</file>
+
+    <!-- IE console fix -->
+    <file name="catalog/view/theme/*/template/common/header.tpl">
+        <operation>
+            <search position="before"><![CDATA[
+				<?php foreach ($scripts as $script) { ?>
+			]]></search>
+            <add><![CDATA[
+				<script type="text/javascript"> if (!window.console) console = {log: function() {}}; var config_language = <?php echo $dt_language; ?>; </script>
+			]]></add>
+        </operation>
+    </file>
+
+	<!-- load common multimerch files -->
+	<file name="catalog/controller/common/header.php">
+		<operation error="log">
+			<search position="after"><![CDATA[
+				public function index() {
+			]]></search>
+			<add><![CDATA[
+				$data = array_merge(MsLoader::getInstance()->getRegistry()->get('load')->language('multiseller/multiseller'), isset($data) ? $data : array());
+				/*$data['ms_total_products'] = MsLoader::getInstance()->MsProduct->getTotalProducts(array(
+					'enabled' => 1,
+					//'product_status' => array(MsProduct::STATUS_ACTIVE),
+				));*/
+
+				/*$data['ms_total_sellers'] = MsLoader::getInstance()->MsSeller->getTotalSellers(array(
+					'seller_status' => array(MsSeller::STATUS_ACTIVE)
+				));*/
+
+				MsLoader::getInstance()->MsHelper->addStyle('multiseller');
+
+				// note: renamed catalog
+				$lang = "view/javascript/multimerch/datatables/lang/" . $this->config->get('config_language') . ".lng";
+				$data['dt_language'] = file_exists(DIR_APPLICATION . $lang) ? "'catalog/$lang'" : "undefined";
+
+				// Add complemented common.js
+				$this->document->addScript('catalog/view/javascript/ms-common.js');
+
+				$data['ms_seller_created'] = MsLoader::getInstance()->MsSeller->isCustomerSeller($this->customer->getId());
+			]]></add>
+		</operation>
+	</file>
+
+	<!-- Get order status id from database -->
+	<file name="catalog/model/account/order.php">
+		<operation>
+			<search position="replace"><![CDATA[
+				$query = $this->db->query("SELECT o.order_id, o.firstname, o.lastname, os.name as status, o.date_added, o.total, o.currency_code, o.currency_value FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_status os ON (o.order_status_id = os.order_status_id) WHERE o.customer_id = '" . (int)$this->customer->getId() . "' AND o.order_status_id > '0' AND o.store_id = '" . (int)$this->config->get('config_store_id') . "' AND os.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY o.order_id DESC LIMIT " . (int)$start . "," . (int)$limit);
+			]]></search>
+			<add><![CDATA[
+			    $query = $this->db->query("SELECT o.order_id, o.firstname, o.lastname, os.name as status, os.order_status_id, o.date_added, o.total, o.currency_code, o.currency_value FROM `" . DB_PREFIX . "order` o LEFT JOIN " . DB_PREFIX . "order_status os ON (o.order_status_id = os.order_status_id) WHERE o.customer_id = '" . (int)$this->customer->getId() . "' AND o.order_status_id > '0' AND o.store_id = '" . (int)$this->config->get('config_store_id') . "' AND os.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY o.order_id DESC LIMIT " . (int)$start . "," . (int)$limit);
+			]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[
+				public function getOrder($order_id) {
+			]]></search>
+			<add><![CDATA[
+				public function getOrder($order_id, $type = NULL) {
+			]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[
+				$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$order_id . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND order_status_id > '0'");
+			]]></search>
+			<add><![CDATA[
+				if (empty($type)) {
+					$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_id = '" . (int)$order_id . "' AND customer_id = '" . (int)$this->customer->getId() . "' AND order_status_id > '0'");
+				} elseif($type == 'seller') {
+					$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` AS o, `" . DB_PREFIX . "ms_order_product_data` AS m WHERE o.order_id = m.order_id AND o.order_id = " . (int)$order_id . " AND m.seller_id = " . (int)$this->customer->getId() . " AND o.order_status_id > '0'");
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="replace"><![CDATA[
+				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+			]]></search>
+			<add><![CDATA[
+				$query = $this->db->query("SELECT op.*, opd.* FROM " . DB_PREFIX . "order_product op JOIN " . DB_PREFIX . "ms_order_product_data opd ON (op.order_id = opd.order_id AND op.product_id = opd.product_id) WHERE op.order_id = '" . (int)$order_id . "'");
+				if(empty($query->rows)) {
+					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+				}
+			]]></add>
+		</operation>
+	</file>
+	
+	<file name="catalog/controller/common/footer.php">
+		<operation>
+			<search position="after"><![CDATA[
+				public function index() {
+			]]></search>
+			<add><![CDATA[
+				$data = array_merge(MsLoader::getInstance()->getRegistry()->get('load')->language('multiseller/multiseller'), isset($data) ? $data : array());
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="catalog/view/theme/*/template/common/footer.tpl">
+		<operation error="skip">
+			<search position="replace"><![CDATA[
+			<div id="powered"><?php echo $powered; ?></div>
+			]]></search>
+			<add><![CDATA[
+			<div id="powered"><?php echo $powered; ?><?php echo $ms_footer; ?></div>
+			]]></add>
+		</operation>
+	</file>
+
+	<!-- Disable the product if quantity is 0 -->
+	<file name="catalog/model/checkout/order.php">
+		<operation>
+			<search position="after"><![CDATA[
+				$this->db->query("UPDATE " . DB_PREFIX . "product SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_id = '" . (int)$order_product['product_id'] . "' AND subtract = '1'");
+			]]></search>
+			<add><![CDATA[
+				if ($this->config->get('msconf_disable_product_after_quantity_depleted')) {
+					$res = $this->db->query("SELECT quantity FROM " . DB_PREFIX . "product WHERE product_id = '" . (int)$order_product['product_id'] . "'");
+					if ((int)$res->row['quantity'] <= 0) {
+						MsLoader::getInstance()->MsProduct->changeStatus((int)$order_product['product_id'], MsProduct::STATUS_DISABLED);
+						MsLoader::getInstance()->MsProduct->disapprove((int)$order_product['product_id']);
+					}
+				}
+			]]></add>
+		</operation>
+	</file>
+
+	<!-- Create product return instance for seller -->
+	<!--<file name="catalog/controller/account/return.php">
+		<operation>
+			<search position="after" offset="1"><![CDATA[
+			$this->model_account_activity->addActivity('return_guest', $activity_data);
+		]]></search>
+			<add><![CDATA[
+		$data = $this->request->post;
+		$data['return_status_id'] = (int)$this->config->get('config_return_status_id');
+		$data['seller_id'] = MsLoader::getInstance()->MsProduct->getSellerId($data['product_id']);
+
+		$seller_return_id = MsLoader::getInstance()->MsReturn->createReturn($data);
+		]]></add>
+		</operation>
+	</file>-->
+
+	<!-- Hide shipping calculations from cart if MM Vendor Shipping enabled. -->
+	<file name="catalog/controller/extension/total/shipping.php">
+		<operation>
+			<search position="replace"><![CDATA[
+				if ($this->config->get('shipping_status') && $this->config->get('shipping_estimator') && $this->cart->hasShipping()) {
+			]]></search>
+			<add><![CDATA[
+				if ($this->config->get('shipping_status') && $this->config->get('shipping_estimator') && $this->cart->hasShipping() && (int)$this->config->get('msconf_shipping_type') !== 2) {
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="catalog/controller/checkout/confirm.php">
+		<operation>
+			<search position="replace"><![CDATA[
+				if (!isset($this->session->data['shipping_method'])) {
+			]]></search>
+			<add><![CDATA[
+				if((int)$this->config->get('msconf_shipping_type') == 2) {
+					foreach($this->cart->getProducts() as $product) {
+						if (!isset($this->session->data['ms_cart_product_shipping']['fixed'][$product['product_id']]) && !isset($this->session->data['ms_cart_product_shipping']['combined'][$product['product_id']]) && !isset($this->session->data['ms_cart_product_shipping']['free'][$product['product_id']])) {
+							$redirect = $this->url->link('checkout/checkout', '', true);
+						}
+					}
+				} else if (!isset($this->session->data['shipping_method'])) {
+			]]></add>
+		</operation>
+
+		<operation>
+			<search position="after"><![CDATA[
+				unset($this->session->data['shipping_methods']);
+			]]></search>
+			<add><![CDATA[
+				unset($this->session->data['ms_cart_product_shipping']);
+			]]></add>
+		</operation>
+	</file>
+
+	<file name="catalog/controller/checkout/success.php">
+		<operation>
+			<search position="after"><![CDATA[
+				unset($this->session->data['totals']);
+			]]></search>
+			<add><![CDATA[
+				unset($this->session->data['ms_cart_product_shipping']);
+			]]></add>
+		</operation>
+	</file>
+
+	<!-- add mm mail to customer before $this->response->redirect($this->url->link('account/return/success', '', true)); -->
+	<file name="catalog/controller/account/return.php">
+		<operation>
+			<search position="after"><![CDATA[
+				public function add() {
+			]]></search>
+			<add><![CDATA[
+				if(isset($this->request->get['product_id'])) {
+					$this->session->data['return_product_id'] = $this->request->get['product_id'];
+				}
+			]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[
+				$this->response->redirect($this->url->link('account/return/success', '', true));
+			]]></search>
+			<add><![CDATA[
+				// get product seller's email
+				if(isset($this->session->data['return_product_id'])) {
+					$seller_id = MsLoader::getInstance()->MsProduct->getSellerId($this->session->data['return_product_id']);
+					unset($this->session->data['return_product_id']);
+
+					if($seller_id) {
+						$seller_email = MsLoader::getInstance()->MsSeller->getSellerEmail($seller_id);
+						if($seller_email) {
+							$this->load->language('multiseller/multiseller');
+							$serviceLocator = MsLoader::getInstance()->load('\MultiMerch\Module\MultiMerch')->getServiceLocator();
+							$mailTransport = $serviceLocator->get('MailTransport');
+							$mails = new \MultiMerch\Mail\Message\MessageCollection();
+
+							$MailProductReturned = $serviceLocator->get('MailProductReturned', false)
+								->setTo($seller_email)
+								->setData(array(
+									'product_name' => $this->request->post['product'],
+									'store_name' => $this->config->get('config_name')
+								));
+
+							$mails->add($MailProductReturned);
+							$mailTransport->sendMails($mails);
+						}
+					}
+				}
+			]]></add>
+		</operation>
+	</file>
+
+	<!--<file name="admin/controller/setting/setting.php">
+		<operation>
+			<search position="before"><![CDATA[
+				$this->session->data['success'] = $this->language->get('text_success');
+			]]></search>
+			<add><![CDATA[
+				if($this->request->post['config_language'] && $this->session->data['language'] !== $this->request->post['config_language']) {
+					$this->session->data['language'] = $this->request->post['config_language'];
+				}
+			]]></add>
+
+		</operation>
+	</file>-->
+</modification>

@@ -1,0 +1,39 @@
+.account-account #content h2 {
+	clear: both;
+	margin-top: 0;
+}
+
+.account-account #content ul.list-unstyled li a i {
+	font-size: 50px;
+	width: 50px;
+	height: 50px;
+}
+
+.account-account #content ul.list-unstyled li {
+	text-align: center;
+	width: 15.5%;
+	height: 128px;
+	display: inline;
+	float: left;
+}
+
+.account-account #content ul.list-unstyled li a span {
+	display: block;
+}
+
+.account-account #content ul.list-unstyled li a {
+	text-decoration: none;
+	font-weight: bold;
+}
+
+@media (max-width: 720px) {
+	.account-account #content ul.list-unstyled li {
+		width: 25%;
+	}
+}
+
+@media (max-width: 320px) {
+	.account-account #content ul.list-unstyled li {
+		width: 50%;
+	}
+}

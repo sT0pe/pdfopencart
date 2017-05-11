@@ -1,0 +1,100 @@
+<?xml version="1.0" ?>
+<!DOCTYPE modification [
+]>
+<modification>
+    <id>MultiMerch OpenCart 2.3.0.x conpatibility fixes</id>
+    <author>http://multimerch.com/</author>
+
+    <file name="system/config/catalog.php" error="skip">
+        <operation error="skip">
+            <search position="after"><![CDATA[
+                $_['action_event'] = array(
+            ]]></search>
+            <add><![CDATA[
+                'controller/extension/analytics/*/before' => 'event/compatibility/controller',
+                'controller/extension/captcha/*/before'   => 'event/compatibility/controller',
+                'controller/extension/feed/*/before'      => 'event/compatibility/controller',
+                'controller/extension/fraud/*/before'     => 'event/compatibility/controller',
+                'controller/extension/module/*/before'    => 'event/compatibility/controller',
+                'controller/extension/payment/*/before'   => 'event/compatibility/controller',
+                'controller/extension/recurring/*/before' => 'event/compatibility/controller',
+                'controller/extension/shipping/*/before'  => 'event/compatibility/controller',
+                'controller/extension/theme/*/before'     => 'event/compatibility/controller',
+                'controller/extension/total/*/before'     => 'event/compatibility/controller',
+            ]]></add>
+        </operation>
+    </file>
+
+    <file name="admin/controller/event/compatibility.php" error="skip">
+        <operation error="skip">
+            <search position="replace"><![CDATA[
+                $route = $part[1] . '/' . $part[2];
+            ]]></search>
+            <add><![CDATA[
+                unset($part[0]);
+                $route = implode('/', $part);
+			]]></add>
+        </operation>
+    </file>
+
+    <file name="catalog/controller/event/compatibility.php" error="skip">
+        <operation error="skip">
+            <search position="replace"><![CDATA[
+                $route = $part[1] . '/' . $part[2];
+            ]]></search>
+            <add><![CDATA[
+                unset($part[0]);
+                $route = implode('/', $part);
+			]]></add>
+        </operation>
+    </file>
+
+    <file name="admin/controller/extension/extension/module.php" error="skip">
+        <operation error="skip">
+            <search position="after"><![CDATA[
+                $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/module/' . $this->request->get['extension']);
+            ]]></search>
+            <add><![CDATA[
+                $this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'module/' . $this->request->get['extension']);
+                $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'module/' . $this->request->get['extension']);
+			]]></add>
+        </operation>
+    </file>
+
+    <file name="admin/controller/extension/extension/payment.php" error="skip">
+        <operation error="skip">
+            <search position="after"><![CDATA[
+                $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/payment/' . $this->request->get['extension']);
+            ]]></search>
+            <add><![CDATA[
+                $this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'payment/' . $this->request->get['extension']);
+                $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'payment/' . $this->request->get['extension']);
+			]]></add>
+        </operation>
+    </file>
+
+    <file name="admin/controller/extension/extension/total.php" error="skip">
+        <operation error="skip">
+            <search position="after"><![CDATA[
+                $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'extension/total/' . $this->request->get['extension']);
+            ]]></search>
+            <add><![CDATA[
+                $this->model_user_user_group->addPermission($this->user->getGroupId(), 'access', 'total/' . $this->request->get['extension']);
+                $this->model_user_user_group->addPermission($this->user->getGroupId(), 'modify', 'total/' . $this->request->get['extension']);
+			]]></add>
+        </operation>
+    </file>
+
+    <file name="system/library/cart/user.php" error="skip">
+        <operation error="skip">
+            <search position="replace"><![CDATA[
+                return in_array($value, $this->permission[$key]);
+            ]]></search>
+            <add><![CDATA[
+                $part = explode('/', $value);
+                unset($part[0]);
+                return (in_array($value, $this->permission[$key]) || in_array(implode('/', $part), $this->permission[$key])) ? true: false;
+			]]></add>
+        </operation>
+    </file>
+</modification>

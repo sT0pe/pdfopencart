@@ -1,0 +1,13 @@
+#ms-sellerinfo .social_links label {
+    padding-top: 0;
+    padding-right: 0;
+}
+
+.ms-social-links ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.ms-social-links ul li {
+    display: inline;
+}

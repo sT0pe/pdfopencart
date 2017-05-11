@@ -1,0 +1,510 @@
+<?xml version="1.0" ?>
+<!DOCTYPE modification [
+]>
+<modification>
+	<id>MultiMerch Core Product Page Mods</id>
+	<author>http://multimerch.com/</author>
+	
+	<file name="catalog/view/theme/*/template/product/product.tpl">
+		<!-- ********** START TAB HEADERS ********** -->
+
+		<!-- Product Reviews tab header -->
+		<operation error="log">
+			<search position="before"><![CDATA[
+				<!-- mm tab header end -->
+			]]></search>
+			<add><![CDATA[
+				<?php if ($this->config->get('msconf_reviews_enable')) { ?>
+					<li><a href="#tab-mm-reviews" data-toggle="tab"><?php echo $tab_review; ?></a></li>
+				<?php } ?>
+			]]></add>
+		</operation>
+
+		<!-- Product Questions tab header -->
+		<operation error="log">
+			<search position="before"><![CDATA[
+				<!-- mm tab header end -->
+			]]></search>
+			<add><![CDATA[
+				<?php if ($this->config->get('msconf_allow_questions') == 1) { ?>
+					<li><a href="#tab-questions" data-toggle="tab"><?php echo $this->language->get('mm_question_title') . " (" . $questions_count . ")"; ?></a></li>
+				<?php } ?>
+			]]></add>
+		</operation>
+
+		<!-- Product Disqus comments tab header -->
+		<operation error="log">
+			<search position="before"><![CDATA[
+				<!-- mm tab header end -->
+			]]></search>
+			<add><![CDATA[
+				<?php if ($this->config->get('mxtconf_disqus_enable') == 1) { ?>
+					<li><a href="#tab-disqus-comments" data-toggle="tab" ><?php echo $mxt_disqus_comments; ?></a></li>
+				<?php } ?>
+			]]></add>
+		</operation>
+
+		<!-- Product Shipping tab header -->
+		<operation error="log">
+			<search position="before"><![CDATA[
+				<!-- mm tab header end -->
+			]]></search>
+			<add><![CDATA[
+				<?php if ($this->config->get('msconf_shipping_type') == 2) { ?>
+					<li><a href="#tab-mm-shipping" data-toggle="tab"><?php echo $ms_account_product_tab_shipping; ?></a></li>
+				<?php } ?>
+			]]></add>
+		</operation>
+
+		<!-- ********** END TAB HEADERS ********** -->
+
+
+
+		<!-- ********** START TAB CONTENTS ********** -->
+
+		<!-- Product Questions tab content -->
+		<operation error="log">
+			<search position="after"><![CDATA[
+				<!-- tab MM questions -->
+			]]></search>
+			<add><![CDATA[
+				<?php if ($this->config->get('msconf_allow_questions') == 1) { ?>
+					<div class="tab-pane" id="tab-questions">
+						<?php echo $questions; ?>
+					</div>
+				<?php } ?>
+			]]></add>
+		</operation>
+
+		<!-- Product Disqus comments tab content -->
+		<operation error="log">
+			<search position="after"><![CDATA[
+				<!-- tab MM disqus comments -->
+			]]></search>
+			<add><![CDATA[
+			<?php if ($this->config->get('mxtconf_disqus_enable') == 1 AND $seller) { ?>
+				<div class="tab-pane" id="tab-disqus-comments">
+					<div id="disqus_thread"></div>
+					<script>
+					/**
+					* RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+					* LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+					*/
+
+					var disqus_config = function () {
+					this.page.url = '<?php echo $disqus_url; ?>';
+					this.page.identifier = '<?php echo $disqus_identifier; ?>';
+					};
+
+					(function() { // DON'T EDIT BELOW THIS LINE
+					var d = document, s = d.createElement('script');
+
+					s.src = '//<?php echo $this->config->get('mxtconf_disqus_shortname') ?>.disqus.com/embed.js';
+
+					s.setAttribute('data-timestamp', +new Date());
+					(d.head || d.body).appendChild(s);
+					})();
+					</script>
+					<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+				</div>
+			<?php } ?>
+			]]></add>
+		</operation>
+
+		<!-- Product Reviews tab content -->
+		<operation error="log">
+			<search position="after"><![CDATA[
+				<!-- tab MM reviews -->
+			]]></search>
+			<add><![CDATA[
+				<?php if ($this->config->get('msconf_reviews_enable')) { ?>
+					<div class="tab-pane" id="tab-mm-reviews">
+						<div id="reviews"></div>
+					</div>
+				<?php } ?>
+			]]></add>
+		</operation>
+
+		<!-- Product Shipping tab content -->
+		<operation error="log">
+			<search position="after"><![CDATA[
+				<!-- tab MM shipping -->
+			]]></search>
+			<add><![CDATA[
+				<?php if ($this->config->get('msconf_shipping_type') == 2) { ?>
+					<div class="tab-pane" id="tab-mm-shipping">
+						<div id="shipping"></div>
+					</div>
+				<?php } ?>
+			]]></add>
+		</operation>
+
+		<!-- ********** END TAB CONTENTS ********** -->
+
+
+
+		<!-- ********** START MISCELLANEOUS ********** -->
+
+		<!-- Seller information block -->
+		<operation error="log">
+			<search position="before"><![CDATA[
+			<!-- mm attributes end -->
+			]]></search>
+			<add><![CDATA[
+			<?php if (isset($seller) && !empty($seller)): ?>
+			<!-- start sellerinfo -->
+				<h3><?php echo $this->language->get('ms_catalog_product_seller_information'); ?></h3>
+				<div class="mm_box mm_description">
+				<!-- mm catalog product seller avatar block start -->
+					<div class="info-box">
+						<a class="avatar-box thumbnail" href="<?php echo $seller['href']; ?>"><img src="<?php echo $seller['thumb']; ?>" /></a>
+						<div>
+							<ul class="list-unstyled">
+								<li><h3 class="sellersname"><?php echo $seller['nickname']; ?></h3></li>
+								<li><?php echo $seller['settings']['slr_company'] ;?></li>
+								<li><a target="_blank" href="<?php echo $seller['settings']['slr_website'] ;?>"><?php echo $seller['settings']['slr_website'] ;?></a></li>
+								<li><?php echo trim($seller['settings']['slr_city'] . ', ' . $seller['settings']['slr_country'], ',') ;?></li>
+								<li><span class="mm_top_badge"></span><span class="mm_good_badge"></span><span class="mm_king_badge"></span><div class="cl"></div></li>
+							</ul>
+						</div>
+						<a href="<?php echo $seller['href']; ?>" class="btn btn-default btn-block" style="clear: both">
+							<span><?php echo $ms_catalog_seller_profile; ?></span>
+						</a>
+					</div>
+				<!-- mm catalog product seller avatar block end -->
+				</div>
+
+				<?php if(isset($seller['badges']) && !empty($seller['badges'])) :?>
+				<!-- mm catalog product badges start -->
+					<div class='mm_box mm_badges'>
+						<?php foreach($seller['badges'] as $badge) { ?>
+							<img src="<?php echo $badge['image']; ?>" title="<?php echo $badge['description']; ?>" />
+						<?php } ?>
+					</div>
+				<!-- mm catalog product badges end -->
+				<?php endif; ?>
+
+				<?php if ($this->config->get('msconf_sl_status') && !empty($seller['social_links'])): ?>
+				<!-- mm catalog product social start -->
+					<div class="mm_box mm_social_holder">
+						<ul>
+							<?php foreach($seller['social_links'] as $link) { ?>
+								<?php if($this->MsLoader->MsHelper->isValidUrl($link['channel_value'])) { ?>
+									<li><a target="_blank" href="<?php echo $this->MsLoader->MsHelper->addScheme($link['channel_value']); ?>"><img src="<?php echo $link['image']; ?>" /></a></li>
+								<?php } ?>
+							<?php } ?>
+						</ul>
+					</div>
+				<!-- mm catalog product social end -->
+				<?php endif; ?>
+
+				<?php if ($this->config->get('mmess_conf_enable')): ?>
+				<!-- mm catalog product messaging start -->
+					<?php if ((!$this->customer->getId()) || ($this->customer->getId() != $seller['seller_id'])): ?>
+						<?php echo $contactForm; ?>
+						<div class="mm_box mm_messages">
+							<div class="contact">
+								<?php if ($this->customer->getId()) { ?>
+									<div class="button-group">
+									<button type="button" class="btn btn-default btn-block ms-sellercontact" data-toggle="modal" data-target="#contactDialog"><span><?php echo $ms_catalog_product_contact; ?></span></button>
+								</div>
+								<?php } else { ?>
+									<?php echo sprintf($this->language->get('ms_sellercontact_signin'), $this->url->link('account/login', '', 'SSL'), $seller['nickname']); ?>
+								<?php } ?>
+							</div>
+						</div>
+					<?php endif; ?>
+				<!-- mm catalog product messaging end -->
+				<?php endif; ?>
+
+				<?php if ($this->config->get('mxtconf_ga_seller_enable') == 1 && !empty($seller['settings']['slr_ga_tracking_id'])): ?>
+				<!-- mm catalog product google analytics code start -->
+				<script>
+				  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+				  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+				  ga('create', '<?php echo $seller['settings']['slr_ga_tracking_id'] ?>', 'auto');
+				  ga('send', 'pageview');
+
+				</script>
+				<!-- mm catalog product google analytics code end -->
+				<?php endif; ?>
+
+				<?php if ($this->config->get('mxtconf_ga_seller_enable') == 1 && !empty($seller['settings']['slr_ga_tracking_id'])): ?>
+				<!-- mm catalog product google analytics code start -->
+				<script>
+				  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+				  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+				  ga('create', '<?php echo $seller['settings']['slr_ga_tracking_id'] ?>', 'auto');
+				  ga('send', 'pageview');
+
+				</script>
+				<!-- mm catalog product google analytics code end -->
+				<?php endif; ?>
+			<?php endif; ?>
+			]]></add>
+		</operation>
+
+		<!-- Product rating stars -->
+		<operation error="log">
+			<search position="after"><![CDATA[
+				<!-- MM rating stars -->
+			]]></search>
+			<add><![CDATA[
+				<?php if ($this->config->get('msconf_reviews_enable')) { ?>
+					<div class="mm-product-rating">
+						<p>
+							<input id="rating-xs-3" name="rating" class="rating" data-min="0" data-max="5" data-step="1" data-size="xs" data-readonly="true" value="<?php echo $avg_rating ;?>">
+							<a href="" onclick="$('a[href=\'#tab-mm-reviews\']').trigger('click'); return false;"><?php echo $reviews; ?></a>
+						</p>
+					</div>
+				<?php } ?>
+			]]></add>
+		</operation>
+
+		<!-- Hide default rating stars if MM ones are enabled-->
+		<operation error="log">
+			<search position="replace" index="1"><![CDATA[
+				<div class="rating">
+			]]></search>
+			<add><![CDATA[
+				<div class="rating" <?php echo $this->config->get('msconf_reviews_enable') ? 'style="display: none;"' : ''; ?>>
+			]]></add>
+		</operation>
+
+		<!-- Load product's shipping information -->
+		<operation error="log">
+			<search position="before"><![CDATA[
+				<?php echo $footer; ?>
+			]]></search>
+			<add><![CDATA[
+				<script type="text/javascript"><!--
+					$(function() {
+						var product_id = $(document).find('input[name="product_id"]').val();
+						$("#shipping").load("index.php?route=multimerch/product_shipping&product_id=" + product_id);
+					});
+				//--></script>
+			]]></add>
+		</operation>
+
+		<!-- Forbid seller to add his own products to cart -->
+		<operation error="log">
+			<search position="before" index="1"><![CDATA[
+				<script type="text/javascript">
+			]]></search>
+			<add><![CDATA[
+				<script type="text/javascript">
+					<?php if(isset($product_is_owned_by_customer) && $product_is_owned_by_customer) { ?>
+						$(function() {
+							$('#button-cart').attr('disabled', true);
+							// @todo All other errors in this container are overwritten
+							$('#main-error-holder').html('<i class="fa fa-exclamation-circle"></i> <?php echo $this->language->get('ms_error_product_forbid_to_buy_own_product'); ?>
+								<button type="button" class="close" data-dismiss="alert">&times;</button>').show();
+						});
+					<?php } ?>
+				</script>
+			]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="before"><![CDATA[
+				<div class="row"><?php echo $column_left; ?>
+			]]></search>
+			<add><![CDATA[
+				<div id="main-error-holder" class="alert alert-danger" style="display: <?php echo $error_warning ? 'block' : 'none'; ?>"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning ? $error_warning : ''; ?>
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+				</div>
+			]]></add>
+		</operation>
+
+		<!-- ********** END MISCELLANEOUS ********** -->
+	</file>
+
+	<file name="catalog/controller/product/product.php">
+        <!-- Questions -->
+        <operation error="log">
+            <search position="after"><![CDATA[
+                $product_info = $this->model_catalog_product->getProduct($product_id);
+            ]]></search>
+            <add><![CDATA[
+                    $data['questions'] = $this->load->controller('multimerch/product_question');
+                    $data['questions_count'] = MsLoader::getInstance()->MsQuestion->getQuestionTotal($product_id);
+            ]]></add>
+        </operation>
+
+		<!-- Reviews -->
+		<operation error="log">
+			<search position="replace"><![CDATA[
+                $data['tab_review'] = sprintf($this->language->get('tab_review'), $product_info['reviews']);
+            ]]></search>
+			<add><![CDATA[
+
+			$reviews = MsLoader::getInstance()->MsReview->getReviews(array('product_id' => $this->request->get['product_id']));
+			$total_reviews = (!empty($reviews)) ? $reviews[0]['total_rows'] : 0;
+			$avg_rating = 0;
+
+			$data['avg_rating'] = 0;
+			$data['total_reviews'] = $total_reviews;
+
+			if($total_reviews > 0) {
+				foreach ($reviews as $key => $review) {
+					$avg_rating += $review['rating'];
+				}
+				$data['avg_rating'] = round($avg_rating / $total_reviews, 1);
+			}
+
+			$data['ms_catalog_seller_profile_total_reviews'] = sprintf($data['ms_catalog_seller_profile_total_reviews'], $total_reviews, $total_reviews == 1 ? 'review' : 'reviews');;
+
+			$data['tab_review'] = sprintf($this->language->get('tab_review'), $this->config->get('msconf_reviews_enable') ? (int)$total_reviews : (int)$product_info['reviews']);
+            ]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="replace"><![CDATA[
+				$data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
+            ]]></search>
+			<add><![CDATA[
+				$data['reviews'] = sprintf($this->language->get('text_reviews'), $this->config->get('msconf_reviews_enable') ? (int)$data['total_reviews'] : (int)$product_info['reviews']);
+            ]]></add>
+		</operation>
+
+		<operation error="log">
+			<search position="after"><![CDATA[
+                $data['review_status'] = $this->config->get('config_review_status');
+            ]]></search>
+			<add><![CDATA[
+			if($this->config->get('msconf_reviews_enable')) {
+				$this->MsLoader->MsHelper->addStyle('star-rating');
+				$this->MsLoader->MsHelper->addStyle('pagination');
+				$this->document->addScript('catalog/view/javascript/pagination.js');
+				$this->document->addScript('catalog/view/javascript/multimerch/catalog-seller-profile.js');
+			}
+            ]]></add>
+		</operation>
+        
+        <operation error="log">
+            <search position="after"><![CDATA[
+			if ($product_info) {
+			]]></search>
+            <add><![CDATA[
+			$this->document->addStyle('catalog/view/theme/' . MsLoader::getInstance()->load('\MultiMerch\Module\MultiMerch')->getViewTheme() . '/stylesheet/multiseller.css');
+			$this->document->addScript('catalog/view/javascript/dialog-sellercontact.js');
+			$data = array_merge($data, MsLoader::getInstance()->getRegistry()->get('load')->language('multiseller/multiseller'));
+			MsLoader::getInstance()->getRegistry()->get('load')->model('localisation/country');
+			MsLoader::getInstance()->getRegistry()->get('load')->model('localisation/zone');
+			MsLoader::getInstance()->getRegistry()->get('load')->model('tool/image');
+
+			$seller_id = MsLoader::getInstance()->MsProduct->getSellerId($this->request->get['product_id']);
+			$seller = MsLoader::getInstance()->MsSeller->getSeller($seller_id);
+
+			if (!$seller) {
+				$data['seller'] = NULL;
+			} else {
+				$data['seller'] = array();
+				if (!empty($seller['ms.avatar'])) {
+					$data['seller']['thumb'] = MsLoader::getInstance()->MsFile->resizeImage($seller['ms.avatar'], $this->config->get('msconf_seller_avatar_product_page_image_width'), $this->config->get('msconf_seller_avatar_product_page_image_height'));
+				} else {
+					$data['seller']['thumb'] = MsLoader::getInstance()->MsFile->resizeImage('ms_no_image.jpg', $this->config->get('msconf_seller_avatar_product_page_image_width'), $this->config->get('msconf_seller_avatar_product_page_image_height'));
+				}
+
+				$settings = MsLoader::getInstance()->MsSetting->getSellerSettings(array("seller_id" => $seller['seller_id']));
+		        $default_settings = MsLoader::getInstance()->MsSetting->getSellerDefaults();
+
+		        $settings = array_merge($default_settings, $settings);
+				$country = $this->model_localisation_country->getCountry($settings['slr_country']);
+				$settings['slr_country'] = (isset($country['name']) ? $country['name'] : '');
+
+		        $data['seller']['settings'] = $settings;
+
+				$data['seller']['nickname'] = $seller['ms.nickname'];
+				$data['seller']['seller_id'] = $seller['seller_id'];
+
+				$data['seller']['href'] = $this->url->link('seller/catalog-seller/profile', 'seller_id=' . $seller['seller_id']);
+
+				// social links
+				if ($this->config->get('msconf_sl_status')) {
+					$this->MsLoader->MsHelper->addStyle('multimerch_social_links');
+					$data['seller']['social_links'] = $this->MsLoader->MsSocialLink->getSellerChannels($seller['seller_id']);
+					foreach ($data['seller']['social_links'] as &$link) {
+						if($this->MsLoader->MsHelper->isValidUrl($link['channel_value'])) {
+							$link['image'] = $this->model_tool_image->resize($link['image'], $this->config->get('msconf_sl_icon_width'), $this->config->get('msconf_sl_icon_height'));
+						} else {
+							unset($link);
+						}
+					}
+				}
+
+				// badges
+				$badges = array_unique(array_merge(
+					$this->MsLoader->MsBadge->getSellerGroupBadges(array('seller_id' => $seller['seller_id'], 'language_id' => $this->config->get('config_language_id'))),
+					$this->MsLoader->MsBadge->getSellerGroupBadges(array('seller_group_id' => $seller['ms.seller_group'], 'language_id' => $this->config->get('config_language_id'))),
+					$this->MsLoader->MsBadge->getSellerGroupBadges(array('seller_group_id' => $this->config->get('msconf_default_seller_group_id'), 'language_id' => $this->config->get('config_language_id')))
+				), SORT_REGULAR);
+
+				foreach ($badges as &$badge) {
+					$badge['image'] = $this->model_tool_image->resize($badge['image'], $this->config->get('msconf_badge_width'), $this->config->get('msconf_badge_height'));
+				}
+				$data['seller']['badges'] = $badges;
+
+				// load disqus data
+				$data = array_merge($data, $this->load->language('module/multimerch_disqus'));
+				$data['disqus_identifier'] = 'pid' . $this->request->get['product_id'];
+				$data['disqus_url'] = $this->url->link('product/product', 'product_id=' . $this->request->get['product_id'], 'SSL');
+
+				//$data['seller']['total_products'] = MsLoader::getInstance()->MsSeller->getTotalProducts(array(
+				//	'seller_id' => $seller['seller_id'],
+				//	'product_status' => array(MsProduct::STATUS_ACTIVE)
+				//));
+
+				$data['contactForm'] = $this->MsLoader->MsHelper->renderPmDialog($data);
+			}
+			]]></add>
+        </operation>
+
+		<operation error="log">
+			<search position="after"><![CDATA[
+                $data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
+            ]]></search>
+			<add><![CDATA[
+				$data['shippableByOC'] = MsLoader::getInstance()->MsProduct->isShippableByOC($product_id);
+				$data['product_is_owned_by_customer'] = MsLoader::getInstance()->MsProduct->productOwnedBySeller($product_id, $this->customer->getId());
+			]]></add>
+		</operation>
+
+		<!-- Forbid seller to add his own products to cart -->
+		<operation error="log">
+			<search position="before"><![CDATA[
+				$data['breadcrumbs'] = array();
+            ]]></search>
+			<add><![CDATA[
+				if (isset($this->session->data['error_warning'])) {
+					$data['error_warning'] = $this->session->data['error_warning'];
+					unset($this->session->data['error_warning']);
+				} else {
+					$data['error_warning'] = '';
+				}
+			]]></add>
+		</operation>
+    </file>
+
+	<file name="catalog/controller/checkout/cart.php">
+		<!-- Forbid seller to add his own products to cart -->
+		<operation error="log">
+			<search position="before"><![CDATA[
+				if (!$json) {
+            ]]></search>
+			<add><![CDATA[
+				if($this->MsLoader->MsProduct->productOwnedBySeller($product_id, $this->customer->getId())) {
+					$this->load->language('multiseller/multiseller');
+					$json['error'] = $this->language->get('ms_error_product_forbid_to_buy_own_product');
+					$this->session->data['error_warning'] = $this->language->get('ms_error_product_forbid_to_buy_own_product');
+				}
+			]]></add>
+		</operation>
+	</file>
+</modification>

@@ -1,0 +1,94 @@
+<?xml version="1.0" ?>
+<!DOCTYPE modification [
+]>
+<modification>
+	<id>MultiMerch Core SEO URLs</id>
+	<author>http://multimerch.com/</author>
+
+	<file error="skip" name="catalog/controller/common/seo_url.php,catalog/controller/startup/seo_url.php">
+        <operation error="skip">
+			<search position="before"><![CDATA[
+				if ($query->num_rows) {
+			]]></search>
+			<add><![CDATA[
+				if ($part == $this->config->get('msconf_sellers_slug') || $part == 'products') {
+					continue;
+				} else
+			]]></add>
+		</operation>
+
+        <operation error="skip">
+			<search position="replace"><![CDATA[
+				&& $url[0] != 'product_id'
+			]]></search>
+			<add trim="true"><![CDATA[
+				&& $url[0] != 'product_id' && $url[0] != 'seller_id'
+			]]></add>
+		</operation>
+
+		<operation error="skip">
+			<search position="before"><![CDATA[
+				if ($url[0] == 'information_id') {
+			]]></search>
+			<add><![CDATA[
+					if ($url[0] == 'seller_id') {
+						$this->request->get['seller_id'] = $url[1];
+					}
+			]]></add>
+		</operation>
+	
+		<operation error="skip">
+			<search position="before"><![CDATA[
+				} elseif (isset($this->request->get['information_id'])) {
+			]]></search>
+			<add><![CDATA[
+				} elseif (isset($this->request->get['seller_id'])) {
+					if (strpos($this->request->get['_route_'], "products") !== FALSE) {
+						$this->request->get['route'] = 'seller/catalog-seller/products';
+					}
+					else {
+						$this->request->get['route'] = 'seller/catalog-seller/profile';
+					}
+				} elseif (strpos($this->request->get['_route_'], $this->config->get('msconf_sellers_slug')) === 0) {
+					$this->request->get['route'] = 'seller/catalog-seller';
+			]]></add>
+		</operation>
+	
+		<operation error="skip">
+			<search position="replace"><![CDATA[
+				($data['route'] == 'information/information' && $key == 'information_id')
+			]]></search>
+			<add trim="true"><![CDATA[
+				($data['route'] == 'information/information' && $key == 'information_id') || ($data['route'] == 'seller/catalog-seller/profile' && $key == 'seller_id') || ($data['route'] == 'seller/catalog-seller/products' && $key == 'seller_id')
+			]]></add>
+		</operation>
+		
+		<operation error="skip">
+			<search position="after"><![CDATA[
+				if (isset($data['route'])) {
+			]]></search>
+			<add><![CDATA[
+				if ($data['route'] == 'seller/catalog-seller') {
+					$url .= '/' . $this->config->get('msconf_sellers_slug') . '/';
+				}
+			]]></add>
+		</operation>
+		
+		<operation error="skip">
+			<search position="replace" index="1"><![CDATA[
+				$url .= '/' . $query->row['keyword'];
+			]]></search>
+			<add><![CDATA[
+				if ($data['route'] == 'seller/catalog-seller/profile') {
+					$url .= '/' . $this->config->get('msconf_sellers_slug') . '/' . $query->row['keyword'];
+				}
+				else if ($data['route'] == 'seller/catalog-seller/products') {
+					$url .= '/' . $this->config->get('msconf_sellers_slug') . '/' . $query->row['keyword'] . '/products/';
+				}
+				else {
+					$url .= '/' . $query->row['keyword'];
+				}
+			]]></add>
+		</operation>
+	</file>
+</modification>

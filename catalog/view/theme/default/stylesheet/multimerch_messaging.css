@@ -1,0 +1,95 @@
+.ms-account-conversation {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 15px;
+}
+
+.ms-messages .ms-message {
+	margin-bottom: 10px;
+}
+
+.ms-messages .ms-message .title {
+	font-weight: bold;
+}
+
+.ms-messages .ms-message .title .date {
+	font-weight: normal;
+	color: #919a9b;
+	margin-left: 10px;
+}
+
+.ms-messages .ms-message .body {
+	background-color: #e4f5fa;
+	padding: 8px 14px 8px 14px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	position: relative;
+	margin-top: 5px;
+}
+
+.ms-messages .ms-message.admin .body {
+	background-color: #f5e79e;
+}
+
+.ms-messages .ms-message.seller .body {
+	background-color: #efefef;
+}
+
+.ms-messages .ms-message .body::before {
+	content:"\A";
+	border-style: solid;
+	border-width: 5px 8px 5px 0;
+	border-color: transparent #e4f5fa transparent transparent;
+	position: absolute;
+	left: 20px;
+	top: -8px;
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+.ms-messages .ms-message.admin .body::before {
+	border-color: transparent #f5e79e transparent transparent;
+}
+
+.ms-messages .ms-message.seller .body::before {
+	border-color: transparent #efefef transparent transparent;
+}
+
+.ms-messages .ms-message .attachments {
+	padding: 10px;
+}
+
+.ms-messages .ms-message .attachments a {
+	cursor: pointer;
+}
+
+.ms-message-form {
+	border-top: 1px solid #e8e8e8;
+}
+
+.ms-message-form form {
+	margin-top: 15px;
+}
+
+.ms-message-form .list {
+	margin-top: 5px;
+}
+
+.ms-message-form .ms-remove {
+	margin-left: 3px;
+	color: red;
+}
+
+@media (min-width: 760px) {
+	/* Added `#content` to override more significant style */
+	#content .ms-message-form .buttons {
+		margin-top: 0;
+	}
+
+	.ms-message-form .buttons .ms-message-upload {
+		margin-bottom: 30px;
+	}
+}
