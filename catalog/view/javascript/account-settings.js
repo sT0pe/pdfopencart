@@ -36,7 +36,7 @@ $(function() {
 	/**
 	 * Seller settings > General tab
 	 */
-	var logo = initUploader('ms-logo', 'index.php?route=seller/account-setting/jxUploadSellerLogo', 'mini', false, false);
+	var logo =  initUploader('ms-logo', 'index.php?route=seller/account-setting/jxUploadSellerLogo', 'mini', false, false);
 
 	$("#seller_settings_logo").delegate(".ms-remove", "click", function() {
 		var par = $(this).parent();
@@ -46,6 +46,27 @@ $(function() {
 		par.parent().find('.dragndropmini').removeClass('hidden');
 	});
 
+    /**
+     * Offer image upload
+     */
+    var by_image  =  initUploader('by_image',  'index.php?route=multimerch/account_offer/uploadImage', 'mini', false, false);
+    var for_image =  initUploader('for_image', 'index.php?route=multimerch/account_offer/uploadImage', 'mini', false, false);
+
+    $("#offer_by_image").delegate(".ms-remove", "click", function() {
+        var par = $(this).parent();
+        par.addClass('hidden');
+        par.find('input').val('');
+        par.parent().find('.dragndropmini').show();
+        par.parent().find('.dragndropmini').removeClass('hidden');
+    });
+
+    $("#offer_for_image").delegate(".ms-remove", "click", function() {
+        var par = $(this).parent();
+        par.addClass('hidden');
+        par.find('input').val('');
+        par.parent().find('.dragndropmini').show();
+        par.parent().find('.dragndropmini').removeClass('hidden');
+    });
 
 	/**
 	 * Seller settings > Payments tab

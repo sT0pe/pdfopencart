@@ -1,0 +1,123 @@
+---------- Date: 2017-05-03 12:27:11 ~ IP : 127.0.0.1 ----------
+REQUEST URI : /index.php?route=account/account
+MOD DETAILS:
+   modFile   : C:\xampp\htdocs\pdfopencart\vqmod/xml/multimerch_core_sellermenu.xml
+   id        : MultiMerch Core Seller Menu
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/*/template/common/header.tpl(1)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></li>
+
+----------------------------------------------------------------------
+
+
+---------- Date: 2017-05-03 12:27:29 ~ IP : 127.0.0.1 ----------
+REQUEST URI : /index.php?route=account/account
+MOD DETAILS:
+   modFile   : C:\xampp\htdocs\pdfopencart\vqmod/xml/multimerch_core_sellermenu.xml
+   id        : MultiMerch Core Seller Menu
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/*/template/common/header.tpl(1)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></li>
+
+----------------------------------------------------------------------
+
+
+---------- Date: 2017-05-03 12:27:55 ~ IP : 127.0.0.1 ----------
+REQUEST URI : /index.php?route=account/account
+MOD DETAILS:
+   modFile   : C:\xampp\htdocs\pdfopencart\vqmod/xml/multimerch_c_hooks.xml
+   id        : 
+   version   : 
+   vqmver    : 
+   author    : 
+
+File Name    : catalog/view/theme/*/template/common/header.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <div id="top-links" class="nav pull-right">
+
+File Name    : catalog/view/theme/*/template/common/header.tpl(1)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <li><a href="<?php echo $checkout; ?>" title="<?php echo $text_checkout; ?>"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_checkout; ?></span></a></li>
+MOD DETAILS:
+   modFile   : C:\xampp\htdocs\pdfopencart\vqmod/xml/multimerch_core_sellermenu.xml
+   id        : MultiMerch Core Seller Menu
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/*/template/common/header.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <li><a href="<?php echo $download; ?>"><?php echo $text_download; ?></a></li>
+
+File Name    : catalog/view/theme/*/template/common/header.tpl(1)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></li>
+
+----------------------------------------------------------------------
+
+
+---------- Date: 2017-05-03 12:28:13 ~ IP : 127.0.0.1 ----------
+REQUEST URI : /index.php?route=account/account
+MOD DETAILS:
+   modFile   : C:\xampp\htdocs\pdfopencart\vqmod/xml/multimerch_core_sellermenu.xml
+   id        : MultiMerch Core Seller Menu
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/*/template/common/header.tpl(1)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></li>
+
+----------------------------------------------------------------------
+
+
+---------- Date: 2017-05-03 12:28:38 ~ IP : 127.0.0.1 ----------
+REQUEST URI : /index.php?route=account/account
+MOD DETAILS:
+   modFile   : C:\xampp\htdocs\pdfopencart\vqmod/xml/multimerch_core_sellermenu.xml
+   id        : MultiMerch Core Seller Menu
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/*/template/common/header.tpl(0)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <li><a href="<?php echo $download; ?>"><?php echo $text_download; ?></a></li>
+
+File Name    : catalog/view/theme/*/template/common/header.tpl(1)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></li>
+
+----------------------------------------------------------------------
+
+
+---------- Date: 2017-05-03 12:29:08 ~ IP : 127.0.0.1 ----------
+REQUEST URI : /index.php?route=account/account
+MOD DETAILS:
+   modFile   : C:\xampp\htdocs\pdfopencart\vqmod/xml/multimerch_core_sellermenu.xml
+   id        : MultiMerch Core Seller Menu
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/*/template/common/header.tpl(1)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></li>
+
+----------------------------------------------------------------------
+
+
+---------- Date: 2017-05-03 12:39:26 ~ IP : 127.0.0.1 ----------
+REQUEST URI : /index.php?route=account/account
+MOD DETAILS:
+   modFile   : C:\xampp\htdocs\pdfopencart\vqmod/xml/multimerch_core_sellermenu.xml
+   id        : MultiMerch Core Seller Menu
+   version   : 
+   vqmver    : 
+   author    : http://multimerch.com/
+
+File Name    : catalog/view/theme/*/template/common/header.tpl(1)
+VQModObject::applyMod - SEARCH NOT FOUND (SKIPPED): <li><a href="<?php echo $account; ?>"><?php echo $text_account; ?></a></li>
+
+----------------------------------------------------------------------
+
+

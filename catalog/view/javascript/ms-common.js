@@ -23,6 +23,8 @@ function initUploader(id, url, size, multiple, isFile) {
 	if(drop_element == 'ms-avatar') max_file_size = '20mb';
 	if(drop_element == 'ms-banner') max_file_size = '10mb';
 	if(drop_element == 'ms-logo') max_file_size = '5mb';
+    if(drop_element == 'by_image') max_file_size = '5mb';
+    if(drop_element == 'for_image') max_file_size = '5mb';
 	if(drop_element == 'ms-image-dragndrop') max_file_size = '20mb';
 	if(drop_element == 'ms-file-dragndrop') max_file_size = '500mb';
 

@@ -67,12 +67,13 @@
                 <li class='menu-header'><?php echo $ms_seller ;?></li>
 				<?php if ($ms_seller_created && $this->MsLoader->MsSeller->getStatus($this->customer->getId()) == MsSeller::STATUS_ACTIVE) { ?>
 					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-dashboard', '', 'SSL'); ?>"><?php echo $ms_account_dashboard; ?></a></li>
-					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-order', '', 'SSL'); ?>"><?php echo $ms_account_orders; ?></a></li>
+					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-offer', '', 'SSL'); ?>"><?php echo $ms_account_offers; ?></a></li>
+					<!-- pasha <li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-order', '', 'SSL'); ?>"><?php echo $ms_account_orders; ?></a></li>
 					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-product', '', 'SSL'); ?>"><?php echo $ms_account_products; ?></a></li>
 					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-transaction', '', 'SSL'); ?>"><?php echo $ms_account_transactions; ?></a></li>
 					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-payment', '', 'SSL'); ?>"><?php echo $ms_account_payments; ?></a></li>
 					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-payment-request', '', 'SSL'); ?>"><?php echo $ms_account_payment_requests; ?></a></li>
-					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-profile', '', 'SSL'); ?>"><?php echo $ms_account_sellerinfo; ?></a></li>
+					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-profile', '', 'SSL'); ?>"><?php echo $ms_account_sellerinfo; ?></a></li> -->
 					<!--<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-return', '', 'SSL'); ?>"><?php echo $ms_account_returns; ?></a></li>-->
 					<li><a href= "<?php echo MsLoader::getInstance()->getRegistry()->get('url')->link('seller/account-setting', '', 'SSL'); ?>"><?php echo $ms_account_settings; ?></a></li>
 				<?php } else if ($ms_seller_created && $this->MsLoader->MsSeller->getStatus($this->customer->getId()) == MsSeller::STATUS_UNPAID) { ?>

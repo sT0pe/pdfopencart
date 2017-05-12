@@ -330,6 +330,7 @@ class Cart {
 
 		foreach ($this->getProducts() as $product) {
 			if ($product['tax_class_id']) {
+
 				$tax_rates = $this->tax->getRates($product['price'], $product['tax_class_id']);
 
 				foreach ($tax_rates as $tax_rate) {

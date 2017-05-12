@@ -32,12 +32,13 @@
 		<span class="list-group-item"><b><?php echo $ms_seller ;?></b></span>
 		<?php if ($ms_seller_created && $this->MsLoader->MsSeller->getStatus($this->customer->getId()) == MsSeller::STATUS_ACTIVE) { ?>
 			<a class="list-group-item" href="<?php echo $this->url->link('seller/account-dashboard', '', 'SSL') ;?>"><?php echo $ms_account_dashboard ;?></a>
-			<a class="list-group-item" href= "<?php echo $this->url->link('seller/account-order', '', 'SSL'); ?>"><?php echo $ms_account_orders ;?></a>
-			<a class="list-group-item" href= "<?php echo $this->url->link('seller/account-product', '', 'SSL'); ?>"><?php echo $ms_account_products ;?></a>
-			<a class="list-group-item" href= "<?php echo $this->url->link('seller/account-transaction', '', 'SSL'); ?>"><?php echo $ms_account_transactions ;?></a>
-			<a class="list-group-item" href= "<?php echo $this->url->link('seller/account-payment', '', 'SSL'); ?>"><?php echo $ms_account_payments ;?></a>
-			<a class="list-group-item" href= "<?php echo $this->url->link('seller/account-payment-request', '', 'SSL'); ?>"><?php echo $ms_account_payment_requests ;?></a>
-			<a class="list-group-item" href= "<?php echo $this->url->link('seller/account-profile', '', 'SSL'); ?>"><?php echo $ms_account_profile ;?></a>
+			<a class="list-group-item" href= "<?php echo $this->url->link('seller/account-offer', '', 'SSL'); ?>"><?php echo $ms_account_offers ;?></a>
+		<!-- pasha <a class="list-group-item" href= "<?php echo $this->url->link('seller/account-order', '', 'SSL'); ?>"><?php echo $ms_account_orders ;?></a>
+        <a class="list-group-item" href= "<?php echo $this->url->link('seller/account-product', '', 'SSL'); ?>"><?php echo $ms_account_products ;?></a>
+        <a class="list-group-item" href= "<?php echo $this->url->link('seller/account-transaction', '', 'SSL'); ?>"><?php echo $ms_account_transactions ;?></a>
+        <a class="list-group-item" href= "<?php echo $this->url->link('seller/account-payment', '', 'SSL'); ?>"><?php echo $ms_account_payments ;?></a>
+        <a class="list-group-item" href= "<?php echo $this->url->link('seller/account-payment-request', '', 'SSL'); ?>"><?php echo $ms_account_payment_requests ;?></a>
+        <a class="list-group-item" href= "<?php echo $this->url->link('seller/account-profile', '', 'SSL'); ?>"><?php echo $ms_account_profile ;?></a>-->
 			<!--<a class="list-group-item" href= "<?php echo $this->url->link('seller/account-return', '', 'SSL'); ?>"><?php echo $ms_account_returns ;?></a>-->
 			<?php if ($this->config->get('mmess_conf_enable') == 1) { ?>
 				<a class="list-group-item" href="<?php echo $this->url->link('account/msconversation', '', 'SSL'); ?>"><?php echo $ms_account_messages ;?></a>

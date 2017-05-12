@@ -58,6 +58,9 @@ $_['button_list']           = 'List';
 $_['button_grid']           = 'Grid';
 $_['button_map']            = 'View Google Map';
 
+//pasha
+$_['button_offer']           = 'Create an offer';
+
 // Error
 $_['error_exception']       = 'Error Code(%s): %s in %s on line %s';
 $_['error_upload_1']        = 'Warning: The uploaded file exceeds the upload_max_filesize directive in php.ini!';

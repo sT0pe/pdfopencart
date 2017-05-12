@@ -2,6 +2,10 @@
 // Heading
 $_['heading_title']            = 'Shopping Cart';
 
+//pasha
+$_['offer_title']              = 'Create an offer';
+$_['offer_title_view']         = 'Offer information';
+
 // Text
 $_['text_success']             = 'Success: You have added <a href="%s">%s</a> to your <a href="%s">shopping cart</a>!';
 $_['text_remove']              = 'Success: You have modified your shopping cart!';

@@ -1,0 +1,32 @@
+<?php
+
+// Heading Goes here:
+$_['heading_title']            = 'Ajax 即時搜尋';
+
+// Text
+$_['text_module']              = '模組管理';
+$_['text_edit']                = '編輯Ajax 即時搜尋模組';
+$_['text_success']             = '成功：您已修改Ajax 即時搜尋模組！';
+
+// Entry
+$_['entry_limit']              = '搜尋筆數';
+$_['entry_width']              = '縮圖寬度';
+$_['entry_height']             = '縮圖高度';
+$_['entry_title_length']       = '標題長度';
+$_['entry_description_length'] = '簡述長度';
+$_['entry_show_image']         = '顯示商品縮圖';
+$_['entry_show_price']         = '顯示售價';
+$_['entry_show_description']   = '顯示簡述';
+$_['entry_status']             = '狀態';
+
+// Help
+$_['help_length']              = '超過字數長度時將顯示 \'...\' .';
+
+// Error
+$_['error_permission']         = '警告：您沒有權限修改Ajax 即時搜尋模組！';
+$_['error_limit']              = '搜尋筆數必須輸入 !';
+$_['error_width']              = '縮圖寬度必須輸入 !';
+$_['error_height']             = '縮圖高度必須輸入 !';
+$_['error_title_length']       = '標題長度必須輸入 !';
+$_['error_description_length'] = '簡述長度必須輸入 !';
+?>

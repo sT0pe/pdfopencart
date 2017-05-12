@@ -48,12 +48,13 @@
 		<ul class="list-unstyled <?php if ($this->config->get('msconf_graphical_sellermenu')) { ?>graphical<?php } ?>">
 			<?php if ($ms_seller_created && $this->MsLoader->MsSeller->getStatus($this->customer->getId()) == MsSeller::STATUS_ACTIVE) { ?>
 				<li><a href="<?php echo $this->url->link('seller/account-dashboard', '', 'SSL'); ?>"><i class="fa fa-tachometer"></i><span><?php echo $ms_account_dashboard; ?></span></a></li>
-				<li><a href="<?php echo $this->url->link('seller/account-order', '', 'SSL'); ?>"><i class="fa fa-shopping-cart"></i><span><?php echo $ms_account_orders; ?></span></a></li>
-				<li><a href="<?php echo $this->url->link('seller/account-product', '', 'SSL'); ?>"><i class="fa fa-briefcase"></i><span><?php echo $ms_account_products; ?></span></a></li>
-				<li><a href="<?php echo $this->url->link('seller/account-transaction', '', 'SSL'); ?>"><i class="fa fa-book"></i><span><?php echo $ms_account_transactions; ?></span></a></li>
-                <li><a href="<?php echo $this->url->link('seller/account-payment', '', 'SSL'); ?>"><i class="fa fa-usd"></i><span><?php echo $ms_account_payments; ?></span></a></li>
-                <li><a href="<?php echo $this->url->link('seller/account-payment-request', '', 'SSL'); ?>"><i class="fa fa-credit-card"></i><span><?php echo $ms_account_payment_requests; ?></span></a></li>
-                <li><a href="<?php echo $this->url->link('seller/account-profile', '', 'SSL'); ?>"><i class="fa fa-user"></i><span><?php echo $ms_account_sellerinfo; ?></span></a></li>
+                <li><a href="<?php echo $this->url->link('seller/account-offer', '', 'SSL'); ?>"><i class="fa fa-shopping-cart"></i><span><?php echo $ms_account_offers; ?></span></a></li>
+            <!-- pasha <li><a href="<?php echo $this->url->link('seller/account-order', '', 'SSL'); ?>"><i class="fa fa-shopping-cart"></i><span><?php echo $ms_account_orders; ?></span></a></li>
+            <li><a href="<?php echo $this->url->link('seller/account-product', '', 'SSL'); ?>"><i class="fa fa-briefcase"></i><span><?php echo $ms_account_products; ?></span></a></li>
+            <li><a href="<?php echo $this->url->link('seller/account-transaction', '', 'SSL'); ?>"><i class="fa fa-book"></i><span><?php echo $ms_account_transactions; ?></span></a></li>
+            <li><a href="<?php echo $this->url->link('seller/account-payment', '', 'SSL'); ?>"><i class="fa fa-usd"></i><span><?php echo $ms_account_payments; ?></span></a></li>
+            <li><a href="<?php echo $this->url->link('seller/account-payment-request', '', 'SSL'); ?>"><i class="fa fa-credit-card"></i><span><?php echo $ms_account_payment_requests; ?></span></a></li>
+            <li><a href="<?php echo $this->url->link('seller/account-profile', '', 'SSL'); ?>"><i class="fa fa-user"></i><span><?php echo $ms_account_sellerinfo; ?></span></a></li> -->
                 <!--<li><a href="<?php echo $this->url->link('seller/account-return', '', 'SSL'); ?>"><i class="fa fa-reply"></i><span><?php echo $ms_account_returns; ?></span></a></li>-->
 
                 <?php if ($this->config->get('mmess_conf_enable')) { ?>

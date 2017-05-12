@@ -36,6 +36,9 @@ class ControllerCheckoutCart extends Controller {
 			$data['button_shopping'] = $this->language->get('button_shopping');
 			$data['button_checkout'] = $this->language->get('button_checkout');
 
+			// pasha
+			$data['button_offer'] = $this->language->get('button_offer');
+
 			if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
 				$data['error_warning'] = $this->language->get('error_stock');
 			} elseif (isset($this->session->data['error'])) {
@@ -235,6 +238,9 @@ class ControllerCheckoutCart extends Controller {
 
 			$data['checkout'] = $this->url->link('checkout/checkout', '', true);
 
+			//pasha
+			$data['offer'] = $this->url->link('multimerch/account_offer', '', true);
+
 			$this->load->model('extension/extension');
 
 			$data['modules'] = array();
@@ -257,6 +263,12 @@ class ControllerCheckoutCart extends Controller {
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
+
+
+			//pasha
+			if($this->customer->isLogged()){
+				$data['is_seller'] =  MsLoader::getInstance()->MsSeller->isCustomerSeller($this->customer->getId());
+			}
 
 			$this->response->setOutput($this->load->view('checkout/cart', $data));
 		} else {

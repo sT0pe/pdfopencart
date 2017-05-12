@@ -9,6 +9,7 @@ $_['ms_viewinstore'] = 'View in store';
 $_['ms_view'] = 'View';
 $_['ms_view_modify'] = 'View / Modify';
 $_['ms_view_invoice'] = 'View invoice';
+$_['ms_remove_offer'] = 'Remove offer';
 $_['ms_publish'] = 'Publish';
 $_['ms_unpublish'] = 'Unpublish';
 $_['ms_activate'] = 'Activate';
@@ -349,6 +350,9 @@ $_['ms_account_transactions'] = 'Transactions';
 $_['ms_account_payments'] = 'Payments';
 $_['ms_account_payment_requests'] = 'Payment requests';
 $_['ms_account_orders'] = 'Orders';
+// pasha
+$_['ms_account_offers'] = 'Offers';
+//
 $_['ms_account_revenue'] = 'Revenue';
 $_['ms_account_views'] = 'Views';
 $_['ms_account_withdraw'] = 'Request payout';
@@ -649,6 +653,13 @@ $_['ms_account_orders_attachments']    = 'Attachments';
 
 
 $_['ms_account_order_information'] = 'Order Information';
+
+
+// Account - Offers
+$_['ms_account_offer_information']  = 'Offer Information';
+$_['ms_account_offers_breadcrumbs'] = 'Your Offers';
+$_['ms_account_offers_heading']     = 'Your Offers';
+$_['ms_account_offers_caption']     = 'Caption';
 
 // Account - Dashboard
 $_['ms_account_dashboard_heading'] = 'Seller Dashboard';

@@ -56,6 +56,9 @@ class ControllerCommonCart extends Controller {
 
 		$data['button_remove'] = $this->language->get('button_remove');
 
+		//pasha
+		$data['button_offer'] = $this->language->get('button_offer');
+
 		$this->load->model('tool/image');
 		$this->load->model('tool/upload');
 
@@ -139,6 +142,13 @@ class ControllerCommonCart extends Controller {
 
 		$data['cart'] = $this->url->link('checkout/cart');
 		$data['checkout'] = $this->url->link('checkout/checkout', '', true);
+
+		//pasha
+		$data['offer'] = $this->url->link('multimerch/account_offer', '', true);
+
+		if($this->customer->isLogged()){
+			$data['is_seller'] =  MsLoader::getInstance()->MsSeller->isCustomerSeller($this->customer->getId());
+		}
 
 		return $this->load->view('common/cart', $data);
 	}
